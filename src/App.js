@@ -3,6 +3,13 @@ import './partials/App.scss';
 import firebase from './firebase';
 import Axios from 'axios';
 import Results from './components/Results';
+import MainHeader from './components/MainHeader';
+import Favorites from './components/Favorites';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 class App extends Component {
   constructor() {
@@ -229,32 +236,33 @@ getTvShows = () => {
     
     
     return (
-      <div className="App">
-        <h1>Hello Friends! - Binge Fest</h1>
-        <input onChange={this.handleChange} onKeyUp={this.getTvShows} placeholder="tvshows" type="text" onKeyPress={this.handleKeyPressTV}/>
-        <input onChange={this.handleChange} onKeyUp={this.getRestaurants} placeholder="restos" type="text" onKeyPress={this.handleKeyPressResto}/>
+      <Router>
+        <div className="App">
+          <h1>Hello Friends! - Binge Fest</h1>
+          <nav>
+            <Link to ="/home">Home</Link>
+            <Link to ="/favorite">Favorites</Link>
+            <Route path ="/favorite" component={Favorites} />
+          </nav>
 
-        <ul>
-          {
-            this.state.searchedShows.map(((match, index) => {
-              return (
-                <li key={index} value={index} onClick={this.handlePressTV} >{match.name}</li>
-              )
-            }))}
-        </ul>
+          <MainHeader 
+            handleChange = {this.handleChange}
+            getTvShows = {this.getTvShows}
+            handleKeyPressTV = {this.handleKeyPressTV}
+            getRestaurants = {this.getRestaurants}
+            handleKeyPressResto = {this.handleKeyPressResto}
+            handlePressTV = {this.handlePressTv}
+            handlePressResto = {this.handlePressResto}
+            searchedShows = {this.state.searchedShows}
+            searchedRestaurants = {this.state.searchedRestaurants}
+          />
 
-        <ul>
-          {
-            this.state.searchedRestaurants.map(((match, index) => {
-              return (
-                <li key={index} value={index} onClick={this.handlePressResto} >{match.name}</li>
-              )
-            }))}
-        </ul>
+          {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
+          {this.state.resultVisible && <Results specificRestaurants={this.state.specificRestaurants}/>}
+        </div>
 
-        {/* {this.state.resultVisible && <Results name=this.state./>} */}
-
-      </div>
+        
+      </Router>
     );
   }
 }

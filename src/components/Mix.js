@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ShowCard from './ShowCard';
 import RestaurantCard from './RestaurantCard';
-import firebase from './firebase';
+import firebase from '../firebase';
 
 
 class Mix extends Component {
