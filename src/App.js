@@ -28,13 +28,8 @@ class App extends Component {
       //OnKeyPress Li list being constantly updated
       searchedShows: [],
       //If user clicks specific Li in dropdown
-      specificShows: [],
-      //If user clicks specific Li in dropdown
-      specificRestaurants: [],
-      //If user clicks enter on input field
-      listOfShows: [],
-      //If user clicks enter on input field
-      listOfRestaurants: [],
+      restaurantGallery: [],
+      tvShowsGallery: [],
       // fbShowID: [],
       // fbFoodID: [],
       resultVisible: false
@@ -187,36 +182,36 @@ getTvShows = () => {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when ENTER key is pressed
 
-  handleKeyPressTV = (event) => {
+  handleKeyEnterTV = (event) => {
     if (event.key === 'Enter') {
       this.setState ({
         //Will this alter the original state?
-        listOfShows: this.state.searchedShows
+        tvShowsGallery: (this.state.searchedShows),
       })
     }
   }
 
-  handleKeyPressResto = (event) => {
+  handleKeyEnterResto = (event) => {
     if (event.key === 'Enter') {
       this.setState({
-        listOfRestaurants: this.state.searchedRestaurants
+        restaurantGallery: (this.state.searchedRestaurants)
       })
     }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
 
-  handlePressTV = (event) => {
+  handlePressTv = (event) => {
     let index = event.target.value;
     this.setState({
-      specificShows: this.state.searchedShows[index]
+      tvShowsGallery: [this.state.searchedShows[index]]
     })
   }
 
   handlePressResto = (event) => {
     let index = event.target.value;
     this.setState({
-      specificRestaurants: this.state.searchedRestaurants[index],
+      restaurantGallery: [this.state.searchedRestaurants[index]],
       resultVisible: true,
     })
   }
@@ -248,10 +243,10 @@ getTvShows = () => {
           <MainHeader 
             handleChange = {this.handleChange}
             getTvShows = {this.getTvShows}
-            handleKeyPressTV = {this.handleKeyPressTV}
+            handleKeyEnterTV = {this.handleKeyEnterTV}
             getRestaurants = {this.getRestaurants}
-            handleKeyPressResto = {this.handleKeyPressResto}
-            handlePressTV = {this.handlePressTv}
+            handleKeyEnterResto={this.handleKeyEnterResto}
+            handlePressTv = {this.handlePressTv}
             handlePressResto = {this.handlePressResto}
             searchedShows = {this.state.searchedShows}
             searchedRestaurants = {this.state.searchedRestaurants}
@@ -270,18 +265,3 @@ export default App;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//FIREBASE FUNCTIONS BY DANII
-
-// FUNCTION TO ADD TV SHOW TO FIREBASE
-// const dbRef = firebase.database().ref('tv');
-// let showItem = this.state.searchedShows[0]
-// let showName = showItem.name
-// dbRef.update({ [showName]: showItem })
-
-//FUNCTION TO ADD SELECTED RESTAURANT TO FIREBASE
-  // const dbRef = firebase.database().ref('food');
-  // let restaurantItem = this.state.searchedRestaurants[3]
-  // let restaurantName = restaurantItem.name
-  // console.log(restaurantName)
-  // dbRef.update({[restaurantName]: restaurantItem })
