@@ -237,7 +237,7 @@ getTvShows = () => {
           <nav>
             <Link to ="/home">Home</Link>
             <Link to ="/favorite">Favorites</Link>
-            <Route path ="/favorite" component={Favorites} />
+            
           </nav>
 
           <MainHeader 
@@ -256,6 +256,7 @@ getTvShows = () => {
           {this.state.resultVisible && <Results specificRestaurants={this.state.specificRestaurants}/>}
         </div>
 
+        <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} />) }} />
         
       </Router>
     );
