@@ -166,7 +166,6 @@ getTvShows = () => {
     );
   }
 }
-
 export default App;
 
 
