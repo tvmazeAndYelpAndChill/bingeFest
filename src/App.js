@@ -2,22 +2,41 @@ import React, { Component } from 'react';
 import './partials/App.scss';
 import firebase from './firebase';
 import Axios from 'axios';
+import Results from './Results';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      //UserInput being constantly updated onKeyPress
       userInput: '',
+      //Zomato API search start
       searchStart: 0,
+      //Restaurants fave from FB
       faveRestaurants: [],
+      //Shows fave from FB
       faveShows: [],
+      //OnKeyPress Li list being constantly updated 
       searchedRestaurants: [],
+      //OnKeyPress Li list being constantly updated
       searchedShows: [],
+      //If user clicks specific Li in dropdown
+      specificShows: [],
+      //If user clicks specific Li in dropdown
+      specificRestaurants: [],
+      //If user clicks enter on input field
+      listOfShows: [],
+      //If user clicks enter on input field
+      listOfRestaurants: [],
       // fbShowID: [],
       // fbFoodID: [],
+      resultVisible: false
     }
   }
-  // function to make axios call
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // function to make axios call to Zomato to get Restaurant information
+
   getRestaurants = (userSearch) => {
     let searchStart = 0;
     if (userSearch === this.state.userInput) {
@@ -64,24 +83,40 @@ class App extends Component {
     })
   }
 
-  componentDidMount() {
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // function to get data from firebase and store in state
 
-    // function to get data from firebase and store in state
+  componentDidMount() {
     const dbRef = firebase.database().ref();
     dbRef.on('value', (response) => {
 
       const data = response.val();
+      // these arrays store the node names of each item so that when we click button, we can make the button greyed out as UI response
       let fbFoodID = [];
       let fbShowID = [];
-
       if (data != null) {
         fbShowID = Object.keys(data.tv);
         fbFoodID = Object.keys(data.food)
       }
+      let allFaveRestaurants = []
+      let allFaveShows = []
+      for (let item in data.food) {
+        allFaveRestaurants.push(data.food[item]);
+      }
+
+      for (let item in data.tv) {
+        allFaveShows.push(data.tv[item]);
+      }
+      this.setState({
+        faveRestaurants: allFaveRestaurants,
+        faveShows: allFaveShows
+      })
 
     })
-
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // function to make axios call to TV Maze to get TV Shows information
 
 getTvShows = () => {
   Axios({
@@ -89,21 +124,22 @@ getTvShows = () => {
     url: `http://api.tvmaze.com/search/shows?q=${this.state.userInput}`,
     dataResponse: 'json'
   }).then((res)=> {
-    // const searchedShows = res.data.map((item) => {
-    //   let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg'
-    //   let returnedPoster = item.show.image
-    //   if (returnedPoster != null) {
-    //     poster = item.show.image.original
-    //   }
-    // })
+
     const tvShowsResults = res.data.map((item) => {
+      let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg';
+      let returnedPoster = item.show.image;
+
+      if (returnedPoster !=null) {
+        poster = item.show.image.original
+      }
+
       return {
         name: item.show.name,
-        // poster: poster,
+        poster: poster,
         rating: item.show.rating.average,
         genres: item.show.genres,
         runtime: item.show.runtime,
-        summary: item.show.summary
+        summary: item.show.summary,
       }
     })
 
@@ -117,16 +153,8 @@ getTvShows = () => {
   })
 }
 
-
-  // employees.sort(function(a, b) {
-  //   return a.age - b.age
-  // })
-
-  handleChange = (event) => {
-    this.setState({
-      userInput: event.target.value
-    })
-  }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // function to sort returned array of searched TV shows by rating/popularity for optimized user experience
 
   sortbyRating = (a,b) => {
     if (a.rating < b.rating) {
@@ -137,24 +165,80 @@ getTvShows = () => {
     }
   }
 
-  handleKeyPress = (event) => {
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save userInput onKeyPress
+
+  handleChange = (event) => {
+
     if (event.key === 'Enter') {
-      console.log('enter press here! ')
+      console.log('enter press here!');
+    }
+
+    this.setState({
+      userInput: event.target.value
+    })
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when ENTER key is pressed
+
+  handleKeyPressTV = (event) => {
+    if (event.key === 'Enter') {
+      this.setState ({
+        //Will this alter the original state?
+        listOfShows: this.state.searchedShows
+      })
     }
   }
 
+  handleKeyPressResto = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({
+        listOfRestaurants: this.state.searchedRestaurants
+      })
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
+
+  handlePressTV = (event) => {
+    let index = event.target.value;
+    this.setState({
+      specificShows: this.state.searchedShows[index]
+    })
+  }
+
+  handlePressResto = (event) => {
+    let index = event.target.value;
+    this.setState({
+      specificRestaurants: this.state.searchedRestaurants[index],
+      resultVisible: true,
+    })
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
+
+  faveClick = (event, faveItem) => {
+    event.preventDefault();
+    const dbRef = firebase.database().ref(faveItem.name);
+    dbRef.update({ ...faveItem })
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
+
+
   render() {
+    
+    
     return (
       <div className="App">
         <h1>Hello Friends! - Binge Fest</h1>
-        <input onChange={this.handleChange} onKeyDown={this.getTvShows} placeholder="tvshows" type="text" />
-        <input onChange={this.handleChange} onKeyDown={this.getRestaurants} placeholder="restos" type="text" />
+        <input onChange={this.handleChange} onKeyUp={this.getTvShows} placeholder="tvshows" type="text" onKeyPress={this.handleKeyPressTV}/>
+        <input onChange={this.handleChange} onKeyUp={this.getRestaurants} placeholder="restos" type="text" onKeyPress={this.handleKeyPressResto}/>
 
         <ul>
           {
             this.state.searchedShows.map(((match, index) => {
               return (
-                <li>{match.name}</li>
+                <li key={index} value={index} onClick={this.handlePressTV} >{match.name}</li>
               )
             }))}
         </ul>
@@ -163,10 +247,12 @@ getTvShows = () => {
           {
             this.state.searchedRestaurants.map(((match, index) => {
               return (
-                <li key={index}>{match.name}</li>
+                <li key={index} value={index} onClick={this.handlePressResto} >{match.name}</li>
               )
             }))}
         </ul>
+
+        {/* {this.state.resultVisible && <Results name=this.state./>} */}
 
       </div>
     );
