@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './partials/App.scss';
 import firebase from './firebase';
 import Axios from 'axios';
-import Results from './Results';
+import Results from './components/Results';
 
 class App extends Component {
   constructor() {
