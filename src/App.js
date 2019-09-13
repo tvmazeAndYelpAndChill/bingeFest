@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './partials/App.scss';
 import firebase from './firebase';
 import Axios from 'axios';
 
@@ -134,6 +134,12 @@ getTvShows = () => {
     }
     else if (a.rating > b.rating) {
       return 1;
+    }
+  }
+
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      console.log('enter press here! ')
     }
   }
 
