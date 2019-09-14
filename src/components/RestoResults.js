@@ -10,7 +10,7 @@ class RestoResults extends Component {
                 {
                     this.props.restaurantList.map((resto, index) => {
                         return (
-                            <div key={index} >
+                            <div className="restaurantGalleryContainer" key={index} >
                                 <p>{resto.name}</p>
                                 <p>{resto.address}</p>
                                 <p>{resto.cost}</p>
@@ -18,7 +18,7 @@ class RestoResults extends Component {
                                 <p>{resto.rating}</p>
                                 <p>{resto.votes}</p>
                                 <img src={`${resto.thumb}`} alt=""/>
-                                <button onClick={this.faveClick} >Fav4Resto</button>
+                                <button onClick={(event) => this.props.favouriteButton(event, 'food', resto)}>Fav4Resto</button>
                             </div>
                         )
                     })
