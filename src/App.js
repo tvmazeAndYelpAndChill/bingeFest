@@ -221,9 +221,9 @@ getTvShows = () => {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
 
-  faveClick = (event, faveItem) => {
+  faveClick = (event, type, faveItem) => {
     event.preventDefault();
-    const dbRef = firebase.database().ref(faveItem.name);
+    const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
     dbRef.update({ ...faveItem })
     console.log("HELLO from the favClick")
   }

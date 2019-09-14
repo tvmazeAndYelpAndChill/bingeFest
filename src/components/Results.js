@@ -19,7 +19,7 @@ class Results extends Component {
                 tvShowList={this.props.tvShowsGallery}
                 visibilityTvShows={this.props.resultVisibity}
                 favouriteButton={this.props.faveClick}
-                />}})
+                />}
                 
                 {this.props.resetVisible}
 

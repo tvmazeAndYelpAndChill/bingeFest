@@ -16,7 +16,7 @@ class TvShowsResults extends Component {
                                 <p>{show.runtime}</p>
                                 <p>{show.summary}</p>
                                 <img src={`${show.poster}`} alt=""/>
-                                <button onClick={this.props.favouriteButton}>Fav4TvShows</button>
+                                <button onClick={(event) => this.props.favouriteButton(event, 'tv', show)}>Fav4TvShows</button>
                             </div>
                         )
                     })

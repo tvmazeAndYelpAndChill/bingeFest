@@ -18,7 +18,7 @@ class RestoResults extends Component {
                                 <p>{resto.rating}</p>
                                 <p>{resto.votes}</p>
                                 <img src={`${resto.thumb}`} alt=""/>
-                                <button onClick={this.props.favouriteButton}>Fav4Resto</button>
+                                <button onClick={(event) => this.props.favouriteButton(event, 'food', resto)}>Fav4Resto</button>
                             </div>
                         )
                     })
