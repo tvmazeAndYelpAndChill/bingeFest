@@ -32,7 +32,7 @@ class App extends Component {
       tvShowsGallery: [],
       // fbShowID: [],
       // fbFoodID: [],
-      resultVisible: false
+      resultVisibity: false,
     }
   }
 
@@ -187,6 +187,7 @@ getTvShows = () => {
       this.setState ({
         //Will this alter the original state?
         tvShowsGallery: (this.state.searchedShows),
+        resultVisibity: true,
       })
     }
   }
@@ -194,7 +195,8 @@ getTvShows = () => {
   handleKeyEnterResto = (event) => {
     if (event.key === 'Enter') {
       this.setState({
-        restaurantGallery: (this.state.searchedRestaurants)
+        restaurantGallery: (this.state.searchedRestaurants),
+        resultVisibity: true
       })
     }
   }
@@ -204,7 +206,8 @@ getTvShows = () => {
   handlePressTv = (event) => {
     let index = event.target.value;
     this.setState({
-      tvShowsGallery: [this.state.searchedShows[index]]
+      tvShowsGallery: [this.state.searchedShows[index]],
+      resultVisibity: true,
     })
   }
 
@@ -212,17 +215,29 @@ getTvShows = () => {
     let index = event.target.value;
     this.setState({
       restaurantGallery: [this.state.searchedRestaurants[index]],
-      resultVisible: true,
+      resultVisibity: true,
     })
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
 
   faveClick = (event, faveItem) => {
-    event.preventDefault();
-    const dbRef = firebase.database().ref(faveItem.name);
-    dbRef.update({ ...faveItem })
+    // event.preventDefault();
+    // const dbRef = firebase.database().ref(faveItem.name);
+    // dbRef.update({ ...faveItem })
+    console.log("HELLO from the favClick")
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
+
+  resetVisible = () => {
+    this.setState({
+      resultVisibity: false
+    })
+  }
+
+
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
 
@@ -253,7 +268,14 @@ getTvShows = () => {
           />
 
           {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
-          {this.state.resultVisible && <Results specificRestaurants={this.state.specificRestaurants}/>}
+          {(this.state.resultVisibity) && <Results 
+            restaurantGallery={this.state.restaurantGallery} 
+            tvShowsGallery={this.state.tvShowsGallery}
+            resultVisibity={this.state.resultVisibity}
+            faveClick={this.faveClick}
+            resetVisible={this.resetVisible}
+            />}
+
         </div>
 
         <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} />) }} />
