@@ -7,17 +7,20 @@ class Results extends Component {
     render () {
         return (
             <div>
-(                {console.log(this.props.tvShowGallery)}
+
                 {this.props.resultVisibity && <RestoResults 
                     restaurantList = {this.props.restaurantGallery}
-                    visibilityResto={this.props.resultVisibity}
-                />}  ||
+                    visibilityResto = {this.props.resultVisibity}
+                    favouriteButton = {this.props.faveClick}
+                    
+                />}
 
                 {this.props.resultVisibity && <TvShowsResults 
                 tvShowList={this.props.tvShowsGallery}
                 visibilityTvShows={this.props.resultVisibity}
+                favouriteButton={this.props.faveClick}
                 />}})
-
+                
                 {this.props.resetVisible}
 
             </div>
