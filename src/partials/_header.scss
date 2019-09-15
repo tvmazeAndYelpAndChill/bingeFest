@@ -9,20 +9,59 @@
 
 .mainHeader .wrapper {
     width: 70%;
-    height: 80vh;
-    background: white;
-    border: 20px solid rgba(235,227,202, 0.5);
+    height: 75vh;
+    // background: rgba(255, 255, 255, 0.9);
+    // border: 20px solid rgba(235,227,202, 0.5);
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
 }
 
-.wrapper div {
-    width: 45%;
-    border: 2px solid tomato;
+.tvForm, .restoForm {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
     
 }
 
-input[type="text"] {
+.restoForm {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.tvForm {
+    background: rgba(242,242,242, 0.9);
+}
+
+.restoForm:hover {
+
+    &.tvForm {
+        width: 30%;
+    }
+    
+}
+
+.tvForm:hover {
+    width: 70%;
+
+    &.restoForm {
+        width: 30%;
+    }
+}
+
+input[type=text] {
     margin: 0 auto;
+    border: none;
+    padding: 10px;
+
+    &.restoInput {
+        border-bottom: 1.5px solid $secondaryColor;
+    }
+
+    &.tvInput {
+        border-bottom: 1.5px solid $primaryColor;
+    }
 }
