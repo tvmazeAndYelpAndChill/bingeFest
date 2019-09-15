@@ -1,0 +1,28 @@
+.mainHeader {
+    background: url(../assets/header.png);
+    background-position: right top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    padding-top: 60px;
+}
+
+.mainHeader .wrapper {
+    width: 70%;
+    height: 80vh;
+    background: white;
+    border: 20px solid rgba(235,227,202, 0.5);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrapper div {
+    width: 45%;
+    border: 2px solid tomato;
+    
+}
+
+input[type="text"] {
+    margin: 0 auto;
+}

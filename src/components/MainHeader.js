@@ -4,11 +4,15 @@ class MainHeader extends Component {
     render() {
         return (
             <div>
-                <header>
+                <header className="mainHeader">
                     <div className="wrapper">
-                        <input onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="tvshows" type="text" onKeyPress={this.props.handleKeyEnterTV} />
+                        <div className="tvForm">
+                            <input onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="tvshows" type="text" onKeyPress={this.props.handleKeyEnterTV} />
+                        </div>
+                        <div className="restoForm">
+                            <input onChange={this.props.handleChange} onKeyUp={this.props.getRestaurants} placeholder="restos" type="text" onKeyPress={this.props.handleKeyEnterResto} />
+                        </div>
 
-                        <input onChange={this.props.handleChange} onKeyUp={this.props.getRestaurants} placeholder="restos" type="text" onKeyPress={this.props.handleKeyEnterResto} />
 
                         <ul>
                             {
