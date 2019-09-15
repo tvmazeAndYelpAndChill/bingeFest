@@ -1,10 +1,16 @@
 import React from 'react';
 
-const ShowCard = ({ poster }) => {
+const ShowCard = ({ poster, name, runtime, rating }) => {
     return (
-        <div>
-            
-            <img src={poster} />      
+        <div className='cardShow'>
+            <div className='cardFrontShow'>
+                <img src={poster} />      
+            </div>
+            <div className='cardBackShow'>
+                <h3>{name}</h3>
+                <p>Length: {runtime} mins</p>
+                <p>Rating: {rating}</p>
+            </div>
         </div>
     );
 }
