@@ -5,6 +5,7 @@ import Axios from 'axios';
 import Results from './components/Results';
 import MainHeader from './components/MainHeader';
 import Favorites from './components/Favorites';
+import Mix from './components/Mix';
 import {
   BrowserRouter as Router,
   Route,
@@ -251,7 +252,7 @@ getTvShows = () => {
       <Router>
         <div className="App">
           <nav>
-            <Link to ="/home">Home</Link>
+            <Link to ="/">Home</Link>
             <Link to ="/favorite">Favorites</Link>
             
           </nav>
@@ -280,6 +281,7 @@ getTvShows = () => {
         </div>
 
         <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} removeItem={this.removeItem} />) }} />
+        <Route path="/mix" component={Mix} />
         
       </Router>
     );
