@@ -11,10 +11,9 @@
     width: 70%;
     height: 75vh;
     // background: rgba(255, 255, 255, 0.9);
-    // border: 20px solid rgba(235,227,202, 0.5);
+    // border: 20px solid rgba(242,242,242, 0.9);
     margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
 }
 
 .tvForm, .restoForm {
@@ -23,39 +22,47 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    
-    
+    transition: all 1.5s;
 }
 
 .restoForm {
     background: rgba(255, 255, 255, 0.9);
+    
 }
 
 .tvForm {
     background: rgba(242,242,242, 0.9);
 }
 
-.restoForm:hover {
-
-    &.tvForm {
-        width: 30%;
-    }
+.mainHeader .wrapper:hover {
+    transform: all 1.5s;
     
-}
 
-.tvForm:hover {
-    width: 70%;
-
-    &.restoForm {
-        width: 30%;
+    input {
+        // background: rgba(242,242,242, 0.9);
+        
+        width: 40%;
     }
+
+    .restoForm:hover, .tvForm:hover {
+        width: 100%;
+
+        input {
+            width: 70%;
+            flex-shrink: 1;
+        }
+        
+    }
+
 }
+
 
 input[type=text] {
     margin: 0 auto;
     border: none;
     padding: 10px;
+    background: none;
+    width: 70%;
 
     &.restoInput {
         border-bottom: 1.5px solid $secondaryColor;
