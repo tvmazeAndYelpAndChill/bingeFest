@@ -17,6 +17,7 @@ class Favourites extends Component {
                         return (
                             <div>
                                 <ShowCard poster={show.poster} />
+                                <button onClick={((e) => this.props.removeItem(e, show.name))}>Remove from Favourites</button>
                             </div>
                         )
                     })}
@@ -29,6 +30,7 @@ class Favourites extends Component {
                         return (
                             <div>
                                 <RestaurantCard name={rest.name} thumb={rest.thumb} />
+                                <button onClick={((e) => this.props.removeItem(e, rest.name))}>Remove from Favourites</button>
                             </div>
                         )
                     })}
