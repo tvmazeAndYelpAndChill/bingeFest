@@ -1,10 +1,17 @@
 import React from 'react';
 
-const RestaurantCard = ({ name, thumb }) => {
+const RestaurantCard = ({ name, thumb, phone, rating, address }) => {
     return (
-        <div>
-            <h3>{name}</h3>
-            <img src={thumb} />
+        <div className='cardRest'>
+            <div className='cardFrontRest'>
+                <img src={thumb} />
+            </div>
+            <div className='cardBackRest'>
+                <h3>{name}</h3>
+                <p>Address: {address}</p>
+                <p>Phone Number: {phone}</p>
+                <p>Rating: {rating}</p>
+            </div>
         </div>
     );
 }

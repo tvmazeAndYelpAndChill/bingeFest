@@ -7,16 +7,18 @@ class Favourites extends Component {
     
     render() {
         return (
-            <div>
+            <div className='wrapper'>
                 <div>
                     <h2 className="favouritedHeader">Your Favourited TV Shows</h2>
                 </div>
-                <div>
+                <div className='showContainer'>
                     {this.props.faveShows.map((show) => {
                         return (
                             <div>
-                                <ShowCard poster={show.poster} />
-                                <button onClick={((e) => this.props.removeItem(e, 'tv', show))}>Remove from Favourites</button>
+                                <div>
+                                    <ShowCard poster={show.poster} name={show.name} rating={show.rating} runtime={show.runtime}/>
+                                    <button onClick={((e) => this.props.removeItem(e, 'tv', show))}>Remove from Favourites</button>
+                                </div>
                             </div>
                         )
                     })}
@@ -28,7 +30,7 @@ class Favourites extends Component {
                     {this.props.faveRestaurants.map((rest) => {
                         return (
                             <div>
-                                <RestaurantCard name={rest.name} thumb={rest.thumb} />
+                                <RestaurantCard name={rest.name} address={rest.address} thumb={rest.thumb} phone={rest.phone} rating={rest.rating}/>
                                 <button onClick={((e) => this.props.removeItem(e, 'food', rest))}>Remove from Favourites</button>
                             </div>
                         )

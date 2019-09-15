@@ -1,0 +1,33 @@
+.showContainer {
+    display: flex;
+    // flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.cardShow img {
+    // position: relative;
+    height: 300px;
+    width: 300px;
+    // perspective: 800px;
+}
+
+// .cardShow:hover .cardBackShow {
+//     transform: rotateY(0);
+// }
+
+// .cardShow:hover .cardFrontShow {
+//     transform: rotateY(-180deg);
+// }
+
+// .cardFrontShow, .cardBackShow {
+//     position: absolute;
+//     height: 100%;
+//     width: 100%;
+//     backface-visibility: hidden;
+//     transition: all 1s;
+// }
+
+// .cardBackShow {
+//     transform: rotateY(180deg);
+// }
