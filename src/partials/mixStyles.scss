@@ -1,0 +1,13 @@
+// Mix component styles
+
+// Combo main box section
+.comboBox {
+    display: flex;
+    justify-content: space-between;
+
+    // individual cards
+    .comboResult {
+        margin: 20px;
+        width: calc(50% - 40px);
+    }
+}
