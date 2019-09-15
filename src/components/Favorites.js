@@ -1,47 +1,45 @@
 import React, { Component } from 'react';
 import ShowCard from './ShowCard';
 import RestaurantCard from './RestaurantCard';
-import firebase from '../firebase';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Mix from "./Mix";
 class Favourites extends Component {
     
     render() {
         return (
-            <Router>
+            <div>
                 <div>
-                    <h1>Your Favourited TV Shows</h1>
+                    <h2 className="favouritedHeader">Your Favourited TV Shows</h2>
                 </div>
                 <div>
                     {this.props.faveShows.map((show) => {
                         return (
                             <div>
                                 <ShowCard poster={show.poster} />
-                                <button onClick={((e) => this.props.removeItem(e, show.name))}>Remove from Favourites</button>
+                                <button onClick={((e) => this.props.removeItem(e, 'tv', show))}>Remove from Favourites</button>
                             </div>
                         )
                     })}
                 </div>
                 <div>
-                    <h1>Your Favourited Restaurants</h1>
+                    <h2 className="favouritedHeader">Your Favourited Restaurants</h2>
                 </div>
                 <div>
                     {this.props.faveRestaurants.map((rest) => {
                         return (
                             <div>
                                 <RestaurantCard name={rest.name} thumb={rest.thumb} />
-                                <button onClick={((e) => this.props.removeItem(e, rest.name))}>Remove from Favourites</button>
+                                <button onClick={((e) => this.props.removeItem(e, 'food', rest))}>Remove from Favourites</button>
                             </div>
                         )
                     })}
                 </div>
                 <div>
-                    <h2>Click below to get your generated combo</h2>
-                    <button><Link to="/mix">Get Your Combo!</Link></button>
-                    <Route exact path="/mix" component={Mix} />
+                    <h3>Click below to get your generated combo</h3>
+                    <button><Link to="/mix">Get Your Combo!</Link></button>  
                 </div>
 
-            </Router>
+            </div>
         );
     };
 }
