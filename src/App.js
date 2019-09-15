@@ -97,8 +97,8 @@ class App extends Component {
       let fbFoodID = [];
       let fbShowID = [];
       if (data != null) {
-        fbShowID = Object.keys(data.tv);
-        fbFoodID = Object.keys(data.food)
+        fbShowID = Object.keys(data.tv || {});
+        fbFoodID = Object.keys(data.food || {});
       }
       let allFaveRestaurants = []
       let allFaveShows = []
@@ -225,7 +225,14 @@ getTvShows = () => {
     event.preventDefault();
     const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
     dbRef.update({ ...faveItem })
-    console.log("HELLO from the favClick")
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that delet items upon click from firebase to favourite list
+
+  removeItem = (e, type, faveItem) => {
+    e.preventDefault();
+    const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
+    dbRef.remove();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
@@ -243,7 +250,6 @@ getTvShows = () => {
     return (
       <Router>
         <div className="App">
-          <h1>Hello Friends! - Binge Fest</h1>
           <nav>
             <Link to ="/home">Home</Link>
             <Link to ="/favorite">Favorites</Link>
@@ -273,7 +279,7 @@ getTvShows = () => {
 
         </div>
 
-        <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} />) }} />
+        <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} removeItem={this.removeItem} />) }} />
         
       </Router>
     );
