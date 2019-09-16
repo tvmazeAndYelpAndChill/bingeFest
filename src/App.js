@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import './partials/App.scss';
 import firebase from './firebase';
 import Axios from 'axios';
@@ -36,11 +38,10 @@ class App extends Component {
 
       resultVisibity: false,
 
-      hideLiVisibleResto: true,
+      hideLiVisibleResto: false,
 
-      hideLiVisibleTvShows: true,
+      hideLiVisibleTvShows: false,
 
-      tvShowsCast: [],
     }
   }
 
@@ -91,6 +92,9 @@ class App extends Component {
         searchState: searchStart + 20
       })
     })
+    this.setState({
+      hideLiVisibleResto: true,
+    })
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,48 +132,49 @@ class App extends Component {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to make axios call to TV Maze to get TV Shows information
 
-getTvShows = () => {
-  Axios({
-    method: 'Get',
-    url: `http://api.tvmaze.com/search/shows?q=${this.state.userInput}`,
-    dataResponse: 'json'
-  }).then((res)=> {
+  getTvShows = () => {
+    Axios({
+      method: 'Get',
+      url: `http://api.tvmaze.com/search/shows?q=${this.state.userInput}`,
+      dataResponse: 'json'
+    }).then((res) => {
 
-    const tvShowsResults = res.data.map((item) => {
-      let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg';
-      let returnedPoster = item.show.image;
+      const tvShowsResults = res.data.map((item) => {
+        let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg';
+        let returnedPoster = item.show.image;
 
-      if (returnedPoster !=null) {
-        poster = item.show.image.original
-      }
+        if (returnedPoster != null) {
+          poster = item.show.image.original
+        }
 
-      return {
-        name: item.show.name,
-        rating: item.show.rating.average,
-        id: item.show.id
-      }
-    })
+        return {
+          name: item.show.name,
+          rating: item.show.rating.average,
+          id: item.show.id
+        }
+      })
 
-    const sortedRatingTvResults = tvShowsResults.sort((a,b) => {
-      return a.rating - b.rating
+      const sortedRatingTvResults = tvShowsResults.sort((a, b) => {
+        return a.rating - b.rating
+      })
+
+      this.setState({
+        searchedShows: sortedRatingTvResults.reverse()
+      })
     })
 
     this.setState({
-      searchedShows: sortedRatingTvResults.reverse()
+      hideLiVisibleTvShows: true,
     })
   }
-)
-
-}
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to sort returned array of searched TV shows by rating/popularity for optimized user experience
 
-  sortbyRating = (a,b) => {
+  sortbyRating = (a, b) => {
     if (a.rating < b.rating) {
       return -1;
-    }
-    else if (a.rating > b.rating) {
+    } else if (a.rating > b.rating) {
       return 1;
     }
   }
@@ -191,7 +196,7 @@ getTvShows = () => {
 
   handleKeyEnterTV = (event) => {
     if (event.key === 'Enter') {
-      this.setState ({
+      this.setState({
         //Will this alter the original state?
         tvShowsGallery: (this.state.searchedShows),
       })
@@ -215,7 +220,7 @@ getTvShows = () => {
       url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}`,
       dataResponse: 'json'
     }).then((results) => {
-      let tvShow= {}
+      let tvShow = {}
       tvShow.id = results.data.id;
       tvShow.name = results.data.name;
       tvShow.genres = results.data.genres[0];
@@ -223,13 +228,13 @@ getTvShows = () => {
       tvShow.summary = results.data.summary;
       tvShow.rating = results.data.rating.average;
       tvShow.runtime = results.data.runtime;
-      
+
       Axios({
         method: 'Get',
         url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}/cast`,
         dataResponse: 'json'
       }).then((response) => {
-        for (let i=0;i<5;i++) {
+        for (let i = 0; i < 5; i++) {
           tvShow.cast = response.data
         }
       })
@@ -238,15 +243,18 @@ getTvShows = () => {
       })
     })
     this.setState({
+      hideLiVisibleTvShows: false,
       resultVisibity: true,
     })
   }
+
 
   handlePressResto = (event) => {
     let index = event.target.value;
     this.setState({
       restaurantGallery: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
+      hideLiVisibleResto: false,
     })
   }
 
@@ -255,7 +263,9 @@ getTvShows = () => {
   faveClick = (event, type, faveItem) => {
     event.preventDefault();
     const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
-    dbRef.update({ ...faveItem })
+    dbRef.update({
+      ...faveItem
+    })
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that delet items upon click from firebase to favourite list
@@ -274,47 +284,108 @@ getTvShows = () => {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
 
   render() {
-    
-    return (
-      <Router>
-        <div className="App">
-          <nav>
-            <Link to ="/">Home</Link>
-            <Link to ="/favorite">Favorites</Link>
-            
-          </nav>
 
-          <MainHeader 
-            handleChange = {this.handleChange}
-            getTvShows = {this.getTvShows}
-            handleKeyEnterTV = {this.handleKeyEnterTV}
-            getRestaurants = {this.getRestaurants}
-            handleKeyEnterResto={this.handleKeyEnterResto}
-            handlePressTv = {this.handlePressTv}
-            handlePressResto = {this.handlePressResto}
-            searchedShows = {this.state.searchedShows}
-            searchedRestaurants = {this.state.searchedRestaurants}
+      return ( <
+          Router >
+          <
+          div className = "App" >
+          <
+          nav >
+          <
+          Link to = "/" > Home < /Link> <
+          Link to = "/favorite" > Favorites < /Link>
+
+          <
+          /nav>
+
+          <
+          MainHeader handleChange = {
+            this.handleChange
+          }
+          getTvShows = {
+            this.getTvShows
+          }
+          handleKeyEnterTV = {
+            this.handleKeyEnterTV
+          }
+          getRestaurants = {
+            this.getRestaurants
+          }
+          handleKeyEnterResto = {
+            this.handleKeyEnterResto
+          }
+          handlePressTv = {
+            this.handlePressTv
+          }
+          handlePressResto = {
+            this.handlePressResto
+          }
+          searchedShows = {
+            this.state.searchedShows
+          }
+          searchedRestaurants = {
+            this.state.searchedRestaurants
+          }
+          hideLiVisibleTvShows = {
+            this.state.hideLiVisibleTvShows
+          }
+          hideLiVisibleResto = {
+            this.state.hideLiVisibleResto
+          }
           />
 
-          {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
-          {(this.state.resultVisibity) && <Results 
-            restaurantGallery={this.state.restaurantGallery} 
-            tvShowsGallery={this.state.tvShowsGallery}
-            resultVisibity={this.state.resultVisibity}
-            faveClick={this.faveClick}
-            resetVisible={this.resetVisible}
-            userInput={this.state.userInput}
+          {
+            /* Click on a specific Li from dropdown of RESTOS and map it to the page */ } {
+            (this.state.resultVisibity) && < Results
+            restaurantGallery = {
+              this.state.restaurantGallery
+            }
+            tvShowsGallery = {
+              this.state.tvShowsGallery
+            }
+            resultVisibity = {
+              this.state.resultVisibity
+            }
+            faveClick = {
+              this.faveClick
+            }
+            resetVisible = {
+              this.resetVisible
+            }
+            userInput = {
+              this.state.userInput
+            }
             />}
 
-        </div>
+            <
+            /div>
 
-        <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} removeItem={this.removeItem} />) }} />
-        <Route path="/mix" component={Mix} />
-        
-      </Router>
-    );
-  }
-}
-export default App;
+            <
+            Route exact path = "/favorite"
+            render = {
+              () => {
+                return ( < Favorites faveShows = {
+                    this.state.faveShows
+                  }
+                  faveRestaurants = {
+                    this.state.faveRestaurants
+                  }
+                  removeItem = {
+                    this.removeItem
+                  }
+                  />) }} / >
+                  <
+                  Route path = "/mix"
+                  component = {
+                    Mix
+                  }
+                  />
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  <
+                  /Router>
+                );
+              }
+            }
+            export default App;
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
