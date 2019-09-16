@@ -54,17 +54,19 @@ class Mix extends Component {
 
     render() {
         return (
-            <div>
-                <h2>This is your combo for tonight!</h2>
-                <div className="comboBox">
-                    <ShowCard
-                        className="comboResult"
-                        poster={this.state.randomShow.poster} /> 
-                    <RestaurantCard
-                        className="comboResult"
-                        name={this.state.randomRestaurant.name} 
-                        thumb={this.state.randomRestaurant.thumb}
-                        /> 
+            <div class="mixSection">
+                <div className="wrapper">
+                    <h2>This is your combo for tonight!</h2>
+                    <div className="comboBox">
+                        <ShowCard
+                            className="comboResult"
+                            poster={this.state.randomShow.poster} /> 
+                        <RestaurantCard
+                            className="comboResult"
+                            name={this.state.randomRestaurant.name} 
+                            thumb={this.state.randomRestaurant.thumb}
+                            /> 
+                    </div>
                 </div>
             </div>
         );

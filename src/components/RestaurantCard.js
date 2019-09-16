@@ -2,11 +2,12 @@ import React from 'react';
 
 const RestaurantCard = ({ name, thumb, phone, rating, address }) => {
     return (
-        <div className='cardRest'>
-            <div className='cardFrontRest'>
+        <div className='cardContainer cardContainerRestaurant'>
+            <div className='cardFront'>
                 <img src={thumb} />
+                <p>{name}</p>
             </div>
-            <div className='cardBackRest'>
+            <div className='cardBack'>
                 <h3>{name}</h3>
                 <p>Address: {address}</p>
                 <p>Phone Number: {phone}</p>

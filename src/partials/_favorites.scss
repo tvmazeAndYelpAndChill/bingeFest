@@ -1,4 +1,14 @@
+.favouritesSection .wrapper {
+    margin: 0 auto;
+}
+
 .favouritedHeader {
     color: red;
-    font-family: $primaryFont;
+}
+
+.showContainer,
+.restaurantContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
