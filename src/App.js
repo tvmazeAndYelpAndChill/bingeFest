@@ -243,35 +243,42 @@ getTvShows = () => {
     
     return (
       <Router>
-        <div className="App">
-          <nav>
-            <Link to ="/">Home</Link>
-            <Link to ="/favorite">Favorites</Link>
-            
-          </nav>
-          <MainHeader 
-            handleChange = {this.handleChange}
-            getTvShows = {this.getTvShows}
-            handleKeyEnterTV = {this.handleKeyEnterTV}
-            getRestaurants = {this.getRestaurants}
-            handleKeyEnterResto={this.handleKeyEnterResto}
-            handlePressTv = {this.handlePressTv}
-            handlePressResto = {this.handlePressResto}
-            searchedShows = {this.state.searchedShows}
-            searchedRestaurants = {this.state.searchedRestaurants}
-            hideLiVisibleTvShows = {this.state.hideLiVisibleTvShows}
-            hideLiVisibleResto = {this.state.hideLiVisibleResto}
-          />
-          {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
-          {(this.state.resultVisibity) && <Results 
-            restaurantGallery={this.state.restaurantGallery} 
-            tvShowsGallery={this.state.tvShowsGallery}
-            resultVisibity={this.state.resultVisibity}
-            faveClick={this.faveClick}
-            resetVisible={this.resetVisible}
-            userInput={this.state.userInput}
-            />}
-        </div>
+        
+        <nav>
+          <Link to ="/">Home</Link>
+          <Link to ="/favorite">Favorites</Link>
+        </nav>
+
+        <Route exact path="/" render={() => {
+          return (
+            <div>
+              <MainHeader
+                handleChange={this.handleChange}
+                getTvShows={this.getTvShows}
+                handleKeyEnterTV={this.handleKeyEnterTV}
+                getRestaurants={this.getRestaurants}
+                handleKeyEnterResto={this.handleKeyEnterResto}
+                handlePressTv={this.handlePressTv}
+                handlePressResto={this.handlePressResto}
+                searchedShows={this.state.searchedShows}
+                searchedRestaurants={this.state.searchedRestaurants}
+                hideLiVisibleTvShows={this.state.hideLiVisibleTvShows}
+                hideLiVisibleResto={this.state.hideLiVisibleResto}
+              />
+              {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
+              {(this.state.resultVisibity) && <Results
+                restaurantGallery={this.state.restaurantGallery}
+                tvShowsGallery={this.state.tvShowsGallery}
+                resultVisibity={this.state.resultVisibity}
+                faveClick={this.faveClick}
+                resetVisible={this.resetVisible}
+                userInput={this.state.userInput}
+              />}
+
+            </div>
+          )
+        }} />
+
         <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} removeItem={this.removeItem} />) }} />
         <Route path="/mix" component={Mix} />
         
