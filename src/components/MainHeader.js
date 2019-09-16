@@ -11,9 +11,8 @@ class MainHeader extends Component {
                                 <div className="inputBar">
                                     <input className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text" onKeyPress={this.props.handleKeyEnterTV} />
                                     <button className="searchButton">🡢</button>
-
                                 </div>
-                                <ul style={{ display: this.props.hideLiVisible === true ? 'none' : 'block' }}>
+                                <ul style = {{ display: this.props.hideLiVisibleTvShows === false ? 'none' : 'block' }}>
                                     {
                                         this.props.searchedShows.map(((match, index) => {
                                             return (
@@ -31,7 +30,7 @@ class MainHeader extends Component {
                                     <button className="searchButton">🡢</button>
                                 </div>
                                 
-                                <ul style={{ display: this.props.hideLiVisible === true ? 'none' : 'block' }}>
+                                <ul style={{ display: this.props.hideLiVisibleResto === false ? 'none' : 'block' }}>
                                     {
                                         this.props.searchedRestaurants.map(((match, index) => {
                                             return (
