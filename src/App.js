@@ -34,6 +34,10 @@ class App extends Component {
       // fbShowID: [],
       // fbFoodID: [],
       resultVisibity: false,
+
+      hideLiVisible: false,
+
+      tvShowsCast: [],
     }
   }
 
@@ -153,6 +157,21 @@ getTvShows = () => {
     this.setState({
       searchedShows: sortedRatingTvResults.reverse()
     })
+
+  }).then((results) => {
+    Axios({
+      method: 'Get',
+      url: `http://api.tvmaze.com/shows/49/cast`,
+      dataResponse: 'json',
+    }).then((results) => {
+      let castTvShows = [];
+      for (let i = 0; i < 5; i++) {
+        castTvShows[i] = results.data[i].person.name;
+      }
+      this.setState({
+        tvShowsCast: castTvShows
+      })
+    })
   })
 }
 
@@ -209,6 +228,7 @@ getTvShows = () => {
     this.setState({
       tvShowsGallery: [this.state.searchedShows[index]],
       resultVisibity: true,
+      hideLiVisible: true,
     })
   }
 
@@ -217,6 +237,7 @@ getTvShows = () => {
     this.setState({
       restaurantGallery: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
+      hideLiVisible: true,
     })
   }
 
@@ -267,6 +288,7 @@ getTvShows = () => {
             handlePressResto = {this.handlePressResto}
             searchedShows = {this.state.searchedShows}
             searchedRestaurants = {this.state.searchedRestaurants}
+            hideLiVisible={this.state.hideLiVisible}
           />
 
           {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}

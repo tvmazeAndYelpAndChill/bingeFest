@@ -13,7 +13,7 @@ class MainHeader extends Component {
                                     <button className="searchButton">🡢</button>
 
                                 </div>
-                                <ul>
+                                <ul style={{ display: this.props.hideLiVisible === true ? 'none' : 'block' }}>
                                     {
                                         this.props.searchedShows.map(((match, index) => {
                                             return (
@@ -31,7 +31,7 @@ class MainHeader extends Component {
                                     <button className="searchButton">🡢</button>
                                 </div>
                                 
-                                <ul>
+                                <ul style={{ display: this.props.hideLiVisible === true ? 'none' : 'block' }}>
                                     {
                                         this.props.searchedRestaurants.map(((match, index) => {
                                             return (
