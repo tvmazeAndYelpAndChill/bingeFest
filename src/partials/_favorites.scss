@@ -4,6 +4,7 @@
 
 .favouritesSection {
     background-color: $tertiaryColor;
+    padding: 5% 0;
 }
 
 .favouritedHeaderSection {
@@ -15,7 +16,11 @@
     text-shadow: 2px;
     text-align: center;
     font-size: 6rem;
-    margin-top: 3%;
+    margin: 5% 0;
+}
+
+.individualCard {
+    text-align: center;
 }
 
 .showContainer,
@@ -25,10 +30,37 @@
     justify-content: space-around;
 }
 
+.removeFavButton {
+    padding: 15px 25px;
+    font-size: 2rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin: 5% auto 10% auto;
+}
+
+.removeFavButton:hover {
+    background-color: $secondaryColor;
+    color: #fff;
+}
+
+.removeFavButton:active {
+    background-color: $secondaryColor;
+    color: #fff;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
 .comboHeaderSection {
     background-color: $secondaryColor;
     text-align: center;
-    width: 40%;
+    width: 60%;
     margin: 0 auto;
     padding-bottom: 3%;
 }
@@ -63,4 +95,8 @@
     background-color: $tertiaryColor;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+}
+
+.comboLink:visited {
+    color: black;
 }

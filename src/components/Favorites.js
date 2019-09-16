@@ -15,9 +15,9 @@ class Favourites extends Component {
                         {this.props.faveShows.map((show) => {
                             return (
                                 <div>
-                                    <div>
+                                    <div className='individualCard'>
                                         <ShowCard poster={show.poster} name={show.name} rating={show.rating} runtime={show.runtime}/>
-                                        <button onClick={((e) => this.props.removeItem(e, 'tv', show))}>Remove from Favourites</button>
+                                        <button className='removeFavButton' onClick={((e) => this.props.removeItem(e, 'tv', show))}><i class="far fa-trash-alt"></i></button>
                                     </div>
                                 </div>
                             )
@@ -30,16 +30,17 @@ class Favourites extends Component {
                     <div className="restaurantContainer">
                         {this.props.faveRestaurants.map((rest) => {
                             return (
-                                <div>
+                                <div className='individualCard'>
                                     <RestaurantCard name={rest.name} address={rest.address} thumb={rest.thumb} phone={rest.phone} rating={rest.rating}/>
-                                    <button onClick={((e) => this.props.removeItem(e, 'food', rest))}>Remove from Favourites</button>
+                                    <button className='removeFavButton' onClick={((e) => this.props.removeItem(e, 'food', rest))}><i class="far fa-trash-alt"></i></button>
                                 </div>
                             )
                         })}
                     </div>
+                    
                     <div className='comboHeaderSection'>
                         <h3 className='comboHeader'>Click below to get your generated combo!</h3>
-                        <button className='comboButton'><Link to="/mix">Get Your Combo</Link></button>  
+                        <button className='comboButton'><Link className= 'comboLink' to="/mix">Get Your Combo</Link></button>  
                     </div>
                 </div>
 
