@@ -1,17 +1,19 @@
 nav {
-    background: rgb(255, 255, 255);
+    background: rgb(249,246,239) ;
     padding: 15px 50px;
     height: 50px;
     position: absolute;
     width: 100%;
     text-align: right;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    mix-blend-mode: screen;
 
     a {
         color: black;
         padding: 15px 20px;
         position: relative;
         z-index: 10;
+        
 
         &:hover::after {
             content: '';

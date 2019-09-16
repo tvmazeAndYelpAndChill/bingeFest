@@ -6,22 +6,22 @@ class Results extends Component {
 
     render () {
         return (
-            <div>
+            <main className="resultSection">
+                <h2>Your search results for {this.props.userInput}</h2>
 
-                {this.props.resultVisibity && <RestoResults 
-                    restaurantList = {this.props.restaurantGallery}
+                {this.props.resultVisibity && this.props.restaurantQuery && <RestoResults 
+                    searchedRestaurants = {this.props.searchedRestaurants}
                     visibilityResto = {this.props.resultVisibity}
                     favouriteButton = {this.props.faveClick}
-                    
                 />}
 
-                {this.props.resultVisibity && <TvShowsResults 
-                tvShowList = {this.props.tvShowsGallery}
+                {this.props.resultVisibity && this.props.showQuery && <TvShowsResults 
+                searchedShows = {this.props.searchedShows}
                 visibilityTvShows = {this.props.resultVisibity}
                 favouriteButton = {this.props.faveClick}
                 />}
 
-            </div>
+            </main>
 
         )
     }

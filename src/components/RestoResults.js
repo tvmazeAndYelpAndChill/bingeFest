@@ -8,7 +8,7 @@ class RestoResults extends Component {
 
             <div>
                 {
-                    this.props.restaurantList.map((resto, index) => {
+                    this.props.searchedRestaurants.map((resto, index) => {
                         return (
                             <div className="restaurantGalleryContainer" key={index} >
                                 <p>{resto.name}</p>

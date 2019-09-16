@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 class MainHeader extends Component {
+
     render() {
         return (
             <div>
@@ -9,8 +10,9 @@ class MainHeader extends Component {
                         <div className="tvForm">
                             <form>
                                 <div className="inputBar">
-                                    <input className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text" onKeyPress={this.props.handleKeyEnterTV} />
-                                    <button className="searchButton">🡢</button>
+                                    <input className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text"/>
+                                    <button
+                                    onClick={this.props.handleSubmit} className="searchButton"><i class="fas fa-arrow-right"></i></button>
                                 </div>
                                 <ul style = {{ display: this.props.hideLiVisibleTvShows === false ? 'none' : 'block' }}>
                                     {
@@ -26,8 +28,10 @@ class MainHeader extends Component {
 
                             <form>
                                 <div className="inputBar">
-                                    <input className="restoInput" onChange={this.props.handleChange} onKeyUp={this.props.getRestaurants} placeholder="Search for a restaurant" type="text" onKeyPress={this.props.handleKeyEnterResto} />
-                                    <button className="searchButton">🡢</button>
+                                    <input className="restoInput" onChange={this.props.handleChange} onKeyUp={this.props.getRestaurants} placeholder="Search for a restaurant" type="text"/>
+                                    <button 
+                                    onClick={this.props.handleSubmit}
+                                    className="searchButton"><i class="fas fa-arrow-right"></i></button>
                                 </div>
                                 
                                 <ul style={{ display: this.props.hideLiVisibleResto === false ? 'none' : 'block' }}>
@@ -49,3 +53,5 @@ class MainHeader extends Component {
 }
 
 export default MainHeader;
+
+{/* <input className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text" onKeyPress={this.props.handleKeyEnterTV} /> */}
