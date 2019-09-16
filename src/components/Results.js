@@ -16,12 +16,10 @@ class Results extends Component {
                 />}
 
                 {this.props.resultVisibity && <TvShowsResults 
-                tvShowList={this.props.tvShowsGallery}
-                visibilityTvShows={this.props.resultVisibity}
-                favouriteButton={this.props.faveClick}
+                tvShowList = {this.props.tvShowsGallery}
+                visibilityTvShows = {this.props.resultVisibity}
+                favouriteButton = {this.props.faveClick}
                 />}
-                
-                {this.props.resetVisible}
 
             </div>
 

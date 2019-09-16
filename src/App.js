@@ -33,9 +33,12 @@ class App extends Component {
       tvShowsGallery: [],
       // fbShowID: [],
       // fbFoodID: [],
+
       resultVisibity: false,
 
-      hideLiVisible: false,
+      hideLiVisibleResto: true,
+
+      hideLiVisibleTvShows: true,
 
       tvShowsCast: [],
     }
@@ -142,11 +145,8 @@ getTvShows = () => {
 
       return {
         name: item.show.name,
-        poster: poster,
         rating: item.show.rating.average,
-        genres: item.show.genres,
-        runtime: item.show.runtime,
-        summary: item.show.summary,
+        id: item.show.id
       }
     })
 
@@ -157,22 +157,9 @@ getTvShows = () => {
     this.setState({
       searchedShows: sortedRatingTvResults.reverse()
     })
+  }
+)
 
-  }).then((results) => {
-    Axios({
-      method: 'Get',
-      url: `http://api.tvmaze.com/shows/49/cast`,
-      dataResponse: 'json',
-    }).then((results) => {
-      let castTvShows = [];
-      for (let i = 0; i < 5; i++) {
-        castTvShows[i] = results.data[i].person.name;
-      }
-      this.setState({
-        tvShowsCast: castTvShows
-      })
-    })
-  })
 }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,7 +194,6 @@ getTvShows = () => {
       this.setState ({
         //Will this alter the original state?
         tvShowsGallery: (this.state.searchedShows),
-        resultVisibity: true,
       })
     }
   }
@@ -216,7 +202,6 @@ getTvShows = () => {
     if (event.key === 'Enter') {
       this.setState({
         restaurantGallery: (this.state.searchedRestaurants),
-        resultVisibity: true
       })
     }
   }
@@ -225,10 +210,35 @@ getTvShows = () => {
 
   handlePressTv = (event) => {
     let index = event.target.value;
+    Axios({
+      method: 'Get',
+      url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}`,
+      dataResponse: 'json'
+    }).then((results) => {
+      let tvShow= {}
+      tvShow.id = results.data.id;
+      tvShow.name = results.data.name;
+      tvShow.genres = results.data.genres[0];
+      tvShow.poster = results.data.image.original;
+      tvShow.summary = results.data.summary;
+      tvShow.rating = results.data.rating.average;
+      tvShow.runtime = results.data.runtime;
+      
+      Axios({
+        method: 'Get',
+        url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}/cast`,
+        dataResponse: 'json'
+      }).then((response) => {
+        for (let i=0;i<5;i++) {
+          tvShow.cast = response.data
+        }
+      })
+      this.setState({
+        tvShowsGallery: tvShow,
+      })
+    })
     this.setState({
-      tvShowsGallery: [this.state.searchedShows[index]],
       resultVisibity: true,
-      hideLiVisible: true,
     })
   }
 
@@ -237,7 +247,6 @@ getTvShows = () => {
     this.setState({
       restaurantGallery: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
-      hideLiVisible: true,
     })
   }
 
@@ -259,11 +268,8 @@ getTvShows = () => {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
 
-  resetVisible = () => {
-    this.setState({
-      resultVisibity: false
-    })
-  }
+
+  //NEED TO PUT IN HERE
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
 
@@ -288,7 +294,6 @@ getTvShows = () => {
             handlePressResto = {this.handlePressResto}
             searchedShows = {this.state.searchedShows}
             searchedRestaurants = {this.state.searchedRestaurants}
-            hideLiVisible={this.state.hideLiVisible}
           />
 
           {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
@@ -298,6 +303,7 @@ getTvShows = () => {
             resultVisibity={this.state.resultVisibity}
             faveClick={this.faveClick}
             resetVisible={this.resetVisible}
+            userInput={this.state.userInput}
             />}
 
         </div>
