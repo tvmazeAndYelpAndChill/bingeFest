@@ -67,6 +67,7 @@ class Mix extends Component {
                             thumb={this.state.randomRestaurant.thumb}
                             /> 
                     </div>
+                    <p>Have fun!</p>
                 </div>
             </div>
         );
