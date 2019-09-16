@@ -1,14 +1,38 @@
 // Mix component styles
+.mixSection {
+    height: 100vh;
+    text-align: center;
+    background: url(../assets/comboBg.jpg);
+}
 
 .mixSection .wrapper {
     margin: 0 auto;
-    text-align: center;
+    height: 100%;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+        color: $secondaryColor;
+        font-size: 4rem;
+    }
+
+    p {
+        color: $secondaryColor;
+    }
 }
 
 // Combo main box section
 .comboBox {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    border: 3px solid $secondaryColor;
+    background-color: $tertiaryColor;
+    border-radius: 30px;
+    padding: 50px;
+    width: 80%;
 
     // individual cards
     .comboResult {

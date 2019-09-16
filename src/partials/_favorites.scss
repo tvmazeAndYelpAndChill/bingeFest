@@ -2,8 +2,20 @@
     margin: 0 auto;
 }
 
+.favouritesSection {
+    background-color: $tertiaryColor;
+}
+
+.favouritedHeaderSection {
+    background-color: $primaryColor;
+}
+
 .favouritedHeader {
-    color: red;
+    color: #fff;
+    text-shadow: 2px;
+    text-align: center;
+    font-size: 6rem;
+    margin-top: 3%;
 }
 
 .showContainer,
@@ -11,4 +23,44 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.comboHeaderSection {
+    background-color: $secondaryColor;
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    padding-bottom: 3%;
+}
+
+.comboHeader {
+    font-size: 5rem;
+    padding: 4%;
+    line-height: 1.2;
+    margin-bottom: 4%;
+}
+
+.comboButton {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+.comboButton:hover {
+    background-color: $tertiaryColor;
+}
+
+.comboButton:active {
+    background-color: $tertiaryColor;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }

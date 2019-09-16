@@ -11,7 +11,6 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-
 class App extends Component {
   constructor() {
     super();
@@ -33,20 +32,13 @@ class App extends Component {
       tvShowsGallery: [],
       // fbShowID: [],
       // fbFoodID: [],
-
       resultVisibity: false,
-
-      hideLiVisibleResto: true,
-
-      hideLiVisibleTvShows: true,
-
-      tvShowsCast: [],
+      hideLiVisibleResto: false,
+      hideLiVisibleTvShows: false,
     }
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to make axios call to Zomato to get Restaurant information
-
   getRestaurants = (userSearch) => {
     let searchStart = 0;
     if (userSearch === this.state.userInput) {
@@ -91,15 +83,15 @@ class App extends Component {
         searchState: searchStart + 20
       })
     })
+    this.setState({
+      hideLiVisibleResto: true,
+    })
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to get data from firebase and store in state
-
   componentDidMount() {
     const dbRef = firebase.database().ref();
     dbRef.on('value', (response) => {
-
       const data = response.val();
       // these arrays store the node names of each item so that when we click button, we can make the button greyed out as UI response
       let fbFoodID = [];
@@ -113,7 +105,6 @@ class App extends Component {
       for (let item in data.food) {
         allFaveRestaurants.push(data.food[item]);
       }
-
       for (let item in data.tv) {
         allFaveShows.push(data.tv[item]);
       }
@@ -121,50 +112,42 @@ class App extends Component {
         faveRestaurants: allFaveRestaurants,
         faveShows: allFaveShows
       })
-
     })
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to make axios call to TV Maze to get TV Shows information
-
 getTvShows = () => {
   Axios({
     method: 'Get',
     url: `http://api.tvmaze.com/search/shows?q=${this.state.userInput}`,
     dataResponse: 'json'
   }).then((res)=> {
-
     const tvShowsResults = res.data.map((item) => {
       let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg';
       let returnedPoster = item.show.image;
-
       if (returnedPoster !=null) {
         poster = item.show.image.original
       }
-
       return {
         name: item.show.name,
         rating: item.show.rating.average,
         id: item.show.id
       }
     })
-
     const sortedRatingTvResults = tvShowsResults.sort((a,b) => {
       return a.rating - b.rating
     })
-
     this.setState({
       searchedShows: sortedRatingTvResults.reverse()
     })
   }
 )
-
+  this.setState({
+    hideLiVisibleTvShows: true,
+  })
 }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to sort returned array of searched TV shows by rating/popularity for optimized user experience
-
   sortbyRating = (a,b) => {
     if (a.rating < b.rating) {
       return -1;
@@ -173,22 +156,16 @@ getTvShows = () => {
       return 1;
     }
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save userInput onKeyPress
-
   handleChange = (event) => {
-
     if (event.key === 'Enter') {
       console.log('enter press here!');
     }
-
     this.setState({
       userInput: event.target.value
     })
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when ENTER key is pressed
-
   handleKeyEnterTV = (event) => {
     if (event.key === 'Enter') {
       this.setState ({
@@ -197,7 +174,6 @@ getTvShows = () => {
       })
     }
   }
-
   handleKeyEnterResto = (event) => {
     if (event.key === 'Enter') {
       this.setState({
@@ -205,9 +181,7 @@ getTvShows = () => {
       })
     }
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
-
   handlePressTv = (event) => {
     let index = event.target.value;
     Axios({
@@ -223,7 +197,7 @@ getTvShows = () => {
       tvShow.summary = results.data.summary;
       tvShow.rating = results.data.rating.average;
       tvShow.runtime = results.data.runtime;
-      
+    
       Axios({
         method: 'Get',
         url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}/cast`,
@@ -238,41 +212,33 @@ getTvShows = () => {
       })
     })
     this.setState({
+      hideLiVisibleTvShows: false,
       resultVisibity: true,
     })
   }
-
   handlePressResto = (event) => {
     let index = event.target.value;
     this.setState({
       restaurantGallery: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
+      hideLiVisibleResto: false,
     })
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
-
   faveClick = (event, type, faveItem) => {
     event.preventDefault();
     const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
     dbRef.update({ ...faveItem })
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that delet items upon click from firebase to favourite list
-
   removeItem = (e, type, faveItem) => {
     e.preventDefault();
     const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
     dbRef.remove();
   }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
-
-
   //NEED TO PUT IN HERE
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
-
   render() {
     
     return (
@@ -283,7 +249,6 @@ getTvShows = () => {
             <Link to ="/favorite">Favorites</Link>
             
           </nav>
-
           <MainHeader 
             handleChange = {this.handleChange}
             getTvShows = {this.getTvShows}
@@ -294,8 +259,9 @@ getTvShows = () => {
             handlePressResto = {this.handlePressResto}
             searchedShows = {this.state.searchedShows}
             searchedRestaurants = {this.state.searchedRestaurants}
+            hideLiVisibleTvShows = {this.state.hideLiVisibleTvShows}
+            hideLiVisibleResto = {this.state.hideLiVisibleResto}
           />
-
           {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
           {(this.state.resultVisibity) && <Results 
             restaurantGallery={this.state.restaurantGallery} 
@@ -305,9 +271,7 @@ getTvShows = () => {
             resetVisible={this.resetVisible}
             userInput={this.state.userInput}
             />}
-
         </div>
-
         <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} removeItem={this.removeItem} />) }} />
         <Route path="/mix" component={Mix} />
         
@@ -316,5 +280,4 @@ getTvShows = () => {
   }
 }
 export default App;
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import ShowCard from './ShowCard';
 import RestaurantCard from './RestaurantCard';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Mix from "./Mix";
 class Favourites extends Component {
     
     render() {
         return (
             <div className="favouritesSection">
                 <div class="wrapper">
-                    <div>
+                    <div className='favouritedHeaderSection'>
                         <h2 className="favouritedHeader">Your Favourited TV Shows</h2>
                     </div>
                     <div className='showContainer'>
@@ -25,7 +24,7 @@ class Favourites extends Component {
                         })}
                     </div>
     
-                    <div>
+                    <div className='favouritedHeaderSection'>
                         <h2 className="favouritedHeader">Your Favourited Restaurants</h2>
                     </div>
                     <div className="restaurantContainer">
@@ -38,9 +37,9 @@ class Favourites extends Component {
                             )
                         })}
                     </div>
-                    <div>
-                        <h3>Click below to get your generated combo</h3>
-                        <button><Link to="/mix">Get Your Combo!</Link></button>  
+                    <div className='comboHeaderSection'>
+                        <h3 className='comboHeader'>Click below to get your generated combo!</h3>
+                        <button className='comboButton'><Link to="/mix">Get Your Combo</Link></button>  
                     </div>
                 </div>
 
