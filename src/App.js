@@ -27,16 +27,39 @@ class App extends Component {
       searchedRestaurants: [],
       //OnKeyPress Li list being constantly updated
       searchedShows: [],
-      //If user clicks specific Li in dropdown
-      restaurantGallery: [],
-      tvShowsGallery: [],
-      // fbShowID: [],
-      // fbFoodID: [],
+      // If resultVisibility is true, the result section is rendered
       resultVisibity: false,
+      // If showSearch or restaurantSearch is true, it will render the correct results cards to the results section
+      showQuery: false,
+      restaurantQuery: false,
+      // If hideLiVisibleResto or hideLiVisibleTvShow is true, the dropdown menu appears under search bar
       hideLiVisibleResto: false,
       hideLiVisibleTvShows: false,
     }
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // function to get data from firebase and store in state
+  componentDidMount() {
+    const dbRef = firebase.database().ref();
+    dbRef.on('value', (response) => {
+      const data = response.val();
+
+      let allFaveRestaurants = []
+      let allFaveShows = []
+      for (let item in data.food) {
+        allFaveRestaurants.push(data.food[item]);
+      }
+      for (let item in data.tv) {
+        allFaveShows.push(data.tv[item]);
+      }
+      this.setState({
+        faveRestaurants: allFaveRestaurants,
+        faveShows: allFaveShows
+      })
+    })
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to make axios call to Zomato to get Restaurant information
   getRestaurants = (userSearch) => {
@@ -80,40 +103,15 @@ class App extends Component {
       });
       this.setState({
         searchedRestaurants: restaurantResults,
-        searchState: searchStart + 20
-      })
-    })
-    this.setState({
-      hideLiVisibleResto: true,
-    })
-  }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // function to get data from firebase and store in state
-  componentDidMount() {
-    const dbRef = firebase.database().ref();
-    dbRef.on('value', (response) => {
-      const data = response.val();
-      // these arrays store the node names of each item so that when we click button, we can make the button greyed out as UI response
-      let fbFoodID = [];
-      let fbShowID = [];
-      if (data != null) {
-        fbShowID = Object.keys(data.tv || {});
-        fbFoodID = Object.keys(data.food || {});
-      }
-      let allFaveRestaurants = []
-      let allFaveShows = []
-      for (let item in data.food) {
-        allFaveRestaurants.push(data.food[item]);
-      }
-      for (let item in data.tv) {
-        allFaveShows.push(data.tv[item]);
-      }
-      this.setState({
-        faveRestaurants: allFaveRestaurants,
-        faveShows: allFaveShows
+        searchStart: searchStart + 20,
+        hideLiVisibleResto: true,
+        hideLiVisibleTvShows: false,
+        restaurantQuery: true,
+        showQuery: false,
       })
     })
   }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to make axios call to TV Maze to get TV Shows information
 getTvShows = () => {
@@ -123,107 +121,105 @@ getTvShows = () => {
     dataResponse: 'json'
   }).then((res)=> {
     const tvShowsResults = res.data.map((item) => {
+
+      // error handling for when tv show does not have a poster
       let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg';
       let returnedPoster = item.show.image;
       if (returnedPoster !=null) {
         poster = item.show.image.original
       }
+
+      // error handling for format of tv summary
+      let summary = item.show.summary
+      if (summary == null) {
+        summary = 'No summary available'
+      } else {
+        summary = summary.replace(/<.*?>/g, '')
+      }
+      
+      // returning an object that holds information about each tv show
       return {
         name: item.show.name,
         rating: item.show.rating.average,
-        id: item.show.id
+        id: item.show.id,
+        genres: item.show.genres,
+        runtime: item.show.runtime,
+        cast: 'Nick Chug, Natalia Andreola, Danii Shen, Aushvin Vasanth',
+        summary,
+        poster
       }
     })
     const sortedRatingTvResults = tvShowsResults.sort((a,b) => {
       return a.rating - b.rating
     })
     this.setState({
-      searchedShows: sortedRatingTvResults.reverse()
+      searchedShows: sortedRatingTvResults.reverse(),
+      hideLiVisibleTvShows: true,
+      hideLiVisibleResto: false,
+      restaurantQuery: false,
+      showQuery: true,
     })
-  }
-)
-  this.setState({
-    hideLiVisibleTvShows: true,
   })
 }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // function to sort returned array of searched TV shows by rating/popularity for optimized user experience
-  sortbyRating = (a,b) => {
-    if (a.rating < b.rating) {
-      return -1;
-    }
-    else if (a.rating > b.rating) {
-      return 1;
-    }
-  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save userInput onKeyPress
   handleChange = (event) => {
-    if (event.key === 'Enter') {
-      console.log('enter press here!');
-    }
     this.setState({
       userInput: event.target.value
     })
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when ENTER key is pressed
-  handleKeyEnterTV = (event) => {
-    if (event.key === 'Enter') {
-      this.setState ({
-        //Will this alter the original state?
-        tvShowsGallery: (this.state.searchedShows),
-      })
-    }
-  }
-  handleKeyEnterResto = (event) => {
-    if (event.key === 'Enter') {
-      this.setState({
-        restaurantGallery: (this.state.searchedRestaurants),
-      })
-    }
-  }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
-  handlePressTv = (event) => {
-    let index = event.target.value;
-    Axios({
-      method: 'Get',
-      url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}`,
-      dataResponse: 'json'
-    }).then((results) => {
-      let tvShow= {}
-      tvShow.id = results.data.id;
-      tvShow.name = results.data.name;
-      tvShow.genres = results.data.genres[0];
-      tvShow.poster = results.data.image.original;
-      tvShow.summary = results.data.summary;
-      tvShow.rating = results.data.rating.average;
-      tvShow.runtime = results.data.runtime;
-    
-      Axios({
-        method: 'Get',
-        url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}/cast`,
-        dataResponse: 'json'
-      }).then((response) => {
-        for (let i=0;i<5;i++) {
-          tvShow.cast = response.data
-        }
-      })
-      this.setState({
-        tvShowsGallery: tvShow,
-      })
-    })
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when user submits input on enter key or button
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
     this.setState({
       hideLiVisibleTvShows: false,
+      hideLiVisibleResto: false,
       resultVisibity: true,
     })
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
+  handlePressTv = (event) => {
+    let index = event.target.value;
+
+    this.setState ({
+      searchedShows: [this.state.searchedShows[index]],
+      hideLiVisibleTvShows: false,
+      resultVisibity: true,
+    })
+
+  }
+    
+    //   Axios({
+    //     method: 'Get',
+    //     url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}/cast`,
+    //     dataResponse: 'json'
+    //   }).then((response) => {
+    //     for (let i=0;i<5;i++) {
+    //       tvShow.cast = response.data
+    //     }
+    //   })
+    //   this.setState({
+    //     tvShowsGallery: tvShow,
+    //   })
+    // })
+    // this.setState({
+    //   hideLiVisibleTvShows: false,
+    //   resultVisibity: true,
+    // })
+  
+
   handlePressResto = (event) => {
     let index = event.target.value;
     this.setState({
-      restaurantGallery: [this.state.searchedRestaurants[index]],
+      searchedRestaurants: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
       hideLiVisibleResto: false,
     })
   }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
   faveClick = (event, type, faveItem) => {
     event.preventDefault();
@@ -237,6 +233,8 @@ getTvShows = () => {
     dbRef.remove();
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
+
+
   //NEED TO PUT IN HERE
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
   render() {
@@ -245,8 +243,8 @@ getTvShows = () => {
       <Router>
         
         <nav>
-          <Link to ="/">Home</Link>
-          <Link to ="/favorite">Favorites</Link>
+          <Link to="/"><i class="fas fa-home"></i> Home</Link>
+          <Link to="/favorite"><i class="fas fa-star"></i> Favorites</Link>
         </nav>
 
         <Route exact path="/" render={() => {
@@ -255,9 +253,10 @@ getTvShows = () => {
               <MainHeader
                 handleChange={this.handleChange}
                 getTvShows={this.getTvShows}
-                handleKeyEnterTV={this.handleKeyEnterTV}
+                // handleKeyEnterTV={this.handleKeyEnterTV}
                 getRestaurants={this.getRestaurants}
-                handleKeyEnterResto={this.handleKeyEnterResto}
+                // handleKeyEnterResto={this.handleKeyEnterResto}
+                handleSubmit={this.handleSubmit}
                 handlePressTv={this.handlePressTv}
                 handlePressResto={this.handlePressResto}
                 searchedShows={this.state.searchedShows}
@@ -267,12 +266,14 @@ getTvShows = () => {
               />
               {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
               {(this.state.resultVisibity) && <Results
-                restaurantGallery={this.state.restaurantGallery}
-                tvShowsGallery={this.state.tvShowsGallery}
+                searchedShows={this.state.searchedShows}
+                searchedRestaurants={this.state.searchedRestaurants}
                 resultVisibity={this.state.resultVisibity}
                 faveClick={this.faveClick}
                 resetVisible={this.resetVisible}
                 userInput={this.state.userInput}
+                showQuery={this.state.showQuery}
+                restaurantQuery={this.state.restaurantQuery}
               />}
 
             </div>

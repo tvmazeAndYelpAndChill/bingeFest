@@ -1,0 +1,6 @@
+// STYLING FOR RESULTS SECTION
+
+.resultsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
