@@ -1,0 +1,115 @@
+.mainHeader {
+    background-position: right top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.wrapperHeader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.tvForm, .restoForm {
+    width: 50%;
+    height: 100%;
+    transition: all 1.5s;
+
+    form {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+    }
+}
+
+.restoForm {
+    background: url(../assets/sushi.jpg);
+    background-size: cover;
+    background-position: center;
+
+    .inputBar {
+        border: 1px solid $secondaryColor;
+
+        button {
+            color: $secondaryColor;
+        }
+    }    
+}
+
+.tvForm {
+    background: url(../assets/tv.jpg);
+    background-size: cover;
+    background-position: center;
+
+    .inputBar {
+        border: 1px solid $primaryColor;
+        margin-bottom: 10px;
+
+        button {
+            color: $primaryColor;
+        }
+    }
+}
+
+.inputBar {
+    width: 55%;
+    background: white;
+    overflow: hidden;
+    border-radius: 30px;
+
+    button {
+        width: 60px;
+        height: 40px;
+        background: white;
+        border: none;
+        font-size: 2rem;
+    }
+
+    input[type=text] {
+        margin: 0 auto;
+        border: none;
+        padding: 10px 15px;
+        height: 40px;
+        background: white;
+        width: calc(100% - 60px);
+    }
+
+}
+
+.wrapperHeader:hover {
+    form {
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.4));
+    }
+}
+
+    .restoForm:hover, .tvForm:hover {
+        width: 100%;
+
+        form {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .inputBar {
+            width: 55%;
+            border-width: 3px;
+        }        
+    }
+
+ul {
+    // border: 2px solid tomato;
+    // overflow-y: scroll;
+    transition: all 1s;
+    width: 55%;
+    position: relative;
+    background: white;
+    color: black;
+    padding: 0 15px;
+    margin: 0;
+    list-style: none;
+    border-radius: 20px;
+}

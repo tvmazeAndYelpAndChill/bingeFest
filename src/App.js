@@ -5,6 +5,7 @@ import Axios from 'axios';
 import Results from './components/Results';
 import MainHeader from './components/MainHeader';
 import Favorites from './components/Favorites';
+import Mix from './components/Mix';
 import {
   BrowserRouter as Router,
   Route,
@@ -33,6 +34,10 @@ class App extends Component {
       // fbShowID: [],
       // fbFoodID: [],
       resultVisibity: false,
+
+      hideLiVisible: false,
+
+      tvShowsCast: [],
     }
   }
 
@@ -97,8 +102,8 @@ class App extends Component {
       let fbFoodID = [];
       let fbShowID = [];
       if (data != null) {
-        fbShowID = Object.keys(data.tv);
-        fbFoodID = Object.keys(data.food)
+        fbShowID = Object.keys(data.tv || {});
+        fbFoodID = Object.keys(data.food || {});
       }
       let allFaveRestaurants = []
       let allFaveShows = []
@@ -151,6 +156,21 @@ getTvShows = () => {
 
     this.setState({
       searchedShows: sortedRatingTvResults.reverse()
+    })
+
+  }).then((results) => {
+    Axios({
+      method: 'Get',
+      url: `http://api.tvmaze.com/shows/49/cast`,
+      dataResponse: 'json',
+    }).then((results) => {
+      let castTvShows = [];
+      for (let i = 0; i < 5; i++) {
+        castTvShows[i] = results.data[i].person.name;
+      }
+      this.setState({
+        tvShowsCast: castTvShows
+      })
     })
   })
 }
@@ -208,6 +228,7 @@ getTvShows = () => {
     this.setState({
       tvShowsGallery: [this.state.searchedShows[index]],
       resultVisibity: true,
+      hideLiVisible: true,
     })
   }
 
@@ -216,6 +237,7 @@ getTvShows = () => {
     this.setState({
       restaurantGallery: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
+      hideLiVisible: true,
     })
   }
 
@@ -225,7 +247,14 @@ getTvShows = () => {
     event.preventDefault();
     const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
     dbRef.update({ ...faveItem })
-    console.log("HELLO from the favClick")
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that delet items upon click from firebase to favourite list
+
+  removeItem = (e, type, faveItem) => {
+    e.preventDefault();
+    const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
+    dbRef.remove();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
@@ -243,9 +272,8 @@ getTvShows = () => {
     return (
       <Router>
         <div className="App">
-          <h1>Hello Friends! - Binge Fest</h1>
           <nav>
-            <Link to ="/home">Home</Link>
+            <Link to ="/">Home</Link>
             <Link to ="/favorite">Favorites</Link>
             
           </nav>
@@ -260,6 +288,7 @@ getTvShows = () => {
             handlePressResto = {this.handlePressResto}
             searchedShows = {this.state.searchedShows}
             searchedRestaurants = {this.state.searchedRestaurants}
+            hideLiVisible={this.state.hideLiVisible}
           />
 
           {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
@@ -273,7 +302,8 @@ getTvShows = () => {
 
         </div>
 
-        <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} />) }} />
+        <Route exact path="/favorite" render={() => { return (<Favorites faveShows={this.state.faveShows} faveRestaurants={this.state.faveRestaurants} removeItem={this.removeItem} />) }} />
+        <Route path="/mix" component={Mix} />
         
       </Router>
     );

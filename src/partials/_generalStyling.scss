@@ -1,0 +1,32 @@
+$primaryColor: #6F0013;
+$secondaryColor: #f46e00;
+$tertiaryColor: #ebe3ca;
+$primaryFont: 'Kanit', sans-serif;
+$secondaryFont: 'Montserrat', sans-serif;
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-family: $secondaryFont;
+}
+
+h1,
+h2,
+h3 {
+    font-family: $primaryFont;
+    font-weight: 900;
+    // ---------- reminder: we need to define font size for h1 and for h2
+}
+
+.wrapper {
+    max-width: 1280px;
+    width: 80%;
+}
+
+a {
+    text-decoration: none;
+}
