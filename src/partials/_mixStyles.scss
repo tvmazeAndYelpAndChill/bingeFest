@@ -1,13 +1,17 @@
 // Mix component styles
 
+.mixSection .wrapper {
+    margin: 0 auto;
+    text-align: center;
+}
+
 // Combo main box section
 .comboBox {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 
     // individual cards
     .comboResult {
         margin: 20px;
-        width: calc(50% - 40px);
     }
 }
