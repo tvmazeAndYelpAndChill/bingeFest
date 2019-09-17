@@ -1,6 +1,62 @@
 // STYLING FOR RESULTS SECTION
 
+
+.resultSection {
+    background: $tertiaryColor;
+    padding: 5% 0;
+
+    h2 {
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px;
+        text-align: center;
+        font-size: 6rem;
+        margin: 5% 0;
+        background: $primaryColor;
+    }
+}
+
 .resultsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto-fit, minmax(500px, 0.3fr));
+    grid-auto-rows: minmax(420px, 0.3fr);
+    grid-gap: 20px;
+    
+
+    .eachRestoCard img {
+        height: 50%;
+        object-fit: cover;
+    }
+}
+
+.eachRestoCard, .eachTvCard {
+    text-align: center;
+    background: white;
+}
+
+.favButton {
+    padding: 15px 25px;
+    font-size: 2rem;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin: 5% auto 10% auto;
+}
+
+.favButton:hover {
+    background-color: $secondaryColor;
+    color: #fff;
+}
+
+.favButton:active {
+    background-color: $secondaryColor;
+    color: #fff;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }

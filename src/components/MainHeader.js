@@ -10,7 +10,9 @@ class MainHeader extends Component {
                         <div className="tvForm">
                             <form>
                                 <div className="inputBar">
-                                    <input className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text"/>
+                                    <input 
+                                    ref={this.props.inputRef}
+                                    className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text"/>
                                     <button
                                     onClick={this.props.handleSubmit} className="searchButton"><i class="fas fa-arrow-right"></i></button>
                                 </div>

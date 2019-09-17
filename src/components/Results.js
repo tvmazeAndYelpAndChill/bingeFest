@@ -6,7 +6,9 @@ class Results extends Component {
 
     render () {
         return (
-            <main className="resultSection">
+            <main
+            ref={this.props.resultsRef}
+            className="resultSection">
                 <h2>Your search results for {this.props.userInput}</h2>
 
                 {this.props.resultVisibity && this.props.restaurantQuery && <RestoResults 
