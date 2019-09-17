@@ -5,10 +5,10 @@
     display: flex;
     align-items: center;
     background: url(../assets/comboBg.jpg);
+    background-size: cover;
 }
 
 .mixSection .wrapper {
-    margin: 0 auto;
     padding: 20px 0;
     display: flex;
     flex-direction: column;
@@ -25,6 +25,7 @@
 .comboBox {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     border: 3px solid $secondaryColor;
     background-color: $tertiaryColor;
     border-radius: 30px;
@@ -35,4 +36,18 @@
     .comboResult {
         margin: 20px;
     }
+}
+
+// Responsiveness 
+@media (max-width: 1170px) {
+    .comboBox {
+        width: 100%;
+    }
+}
+
+@media (max-width: 935px) {
+    .comboBox {
+        padding: 20px;
+    }
+
 }
