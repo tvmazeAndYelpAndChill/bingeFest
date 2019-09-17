@@ -136,7 +136,6 @@ class App extends Component {
           }
 
         }).then((res) => {
-          console.log(res.data.rows[0].elements[0].duration.text);
           restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
           // time in seconds
 
