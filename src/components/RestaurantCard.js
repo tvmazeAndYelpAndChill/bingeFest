@@ -9,9 +9,9 @@ const RestaurantCard = ({ name, thumb, phone, rating, address }) => {
             </div>
             <div className='cardBack'>
                 <h3>{name}</h3>
-                <p>Address: {address}</p>
-                <p>Phone Number: {phone}</p>
-                <p>Rating: {rating}</p>
+                <p><i class="fas fa-home"></i> {address}</p>
+                <p><i class="fas fa-phone-alt"></i> {phone}</p>
+                <p><i class="fas fa-star"></i> {rating}</p>
             </div>
         </div>
     );
