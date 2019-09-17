@@ -10,7 +10,7 @@ class MainHeader extends Component {
                     className={this.props.resultVisibity ? "mainHeader headerGone" : "mainHeader" }>
                     <div className="wrapperHeader">
                         <div className="headerTitle">
-                            <h1 >bingFest</h1>
+                            <h1 >bingeFest</h1>
                             <h2>Save your favorite TV Shows and restaurants and let us find you the best combo to binge tonight!</h2>
                         </div>
                         <div className="tvForm">
