@@ -7,6 +7,7 @@ img {
     perspective: 800px;
     width: 300px;
     height: 400px;
+    margin: 10px;
 
     .cardFront img {
         height: 100%;
@@ -73,3 +74,13 @@ img {
     }
 }
 
+@media (max-width: 850px) {
+    .cardContainer {
+        width: 200px;
+        height: 300px;
+
+        p {
+            font-size: 1.4rem;
+        }
+    }
+}
