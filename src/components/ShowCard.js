@@ -8,8 +8,8 @@ const ShowCard = ({ poster, name, runtime, rating }) => {
             </div>
             <div className='cardBack'>
                 <h3>{name}</h3>
-                <p>Length: {runtime} mins</p>
-                <p>Rating: {rating}</p>
+                <p><i class="fas fa-clock"></i> {runtime} mins</p>
+                <p><i class="fas fa-star"></i> {rating} / 10</p>
             </div>
         </div>
     );

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ShowCard from './ShowCard';
 import RestaurantCard from './RestaurantCard';
 import firebase from '../firebase';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 class Mix extends Component {
     constructor() {
@@ -46,7 +48,13 @@ class Mix extends Component {
                     }); 
                     // Error handling for empty item on either TV show or restaurant
                 } else {
-                    alert('Please make sure you add items to your favorite list!');
+                    const MySwal = withReactContent(Swal)
+                    MySwal.fire({
+                        onOpen: () => {
+                            MySwal.clickConfirm()}
+                    }).then(() => {
+                        return MySwal.fire(<p>Please make sure you add items to your favorite list!</p>)
+                    })
                 }
             }
         }) 
@@ -60,14 +68,20 @@ class Mix extends Component {
                     <div className="comboBox">
                         <ShowCard
                             className="comboResult"
-                            poster={this.state.randomShow.poster} /> 
+                            poster={this.state.randomShow.poster} 
+                            name={this.state.randomShow.name}
+                            rating={this.state.randomShow.rating}
+                            runtime={this.state.randomShow.runtime}
+                            /> 
                         <RestaurantCard
                             className="comboResult"
                             name={this.state.randomRestaurant.name} 
                             thumb={this.state.randomRestaurant.thumb}
+                            address={this.state.randomRestaurant.address}
+                            phone={this.state.randomRestaurant.phone}
+                            rating={this.state.randomRestaurant.rating}
                             /> 
                     </div>
-                    <p>Have fun!</p>
                 </div>
             </div>
         );
