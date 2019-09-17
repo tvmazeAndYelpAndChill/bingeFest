@@ -6,6 +6,8 @@ nav {
     width: 100%;
     text-align: right;
     z-index: 10;
+    display: flex;
+    justify-content: space-between;
 
     a {
         color: black;
