@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RestoResults from './RestoResults';
 import TvShowsResults from './TvShowsResults';
+import Footer from './Footer';
 
 class Results extends Component {
 
@@ -23,6 +24,7 @@ class Results extends Component {
                 favouriteButton = {this.props.faveClick}
                 />}
 
+                <Footer />
             </main>
 
         )
