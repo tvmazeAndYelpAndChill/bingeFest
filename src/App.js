@@ -35,6 +35,9 @@ class App extends Component {
       // If hideLiVisibleResto or hideLiVisibleTvShow is true, the dropdown menu appears under search bar
       hideLiVisibleResto: false,
       hideLiVisibleTvShows: false,
+      //Google Map API States
+      filteredRestaurant: [],
+      userAddress: ''
     }
 
     this.inputRef = React.createRef();
@@ -108,8 +111,49 @@ class App extends Component {
           phone: item.restaurant.phone_numbers,
         }
       });
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //Google Maps API starts Here 
+
+      const apiKey = `AIzaSyATIp2yKkc69JQ6qlD4B6hY90xBwuJA2UQ`;
+      const origin = `${this.state.userAddress}`
+      let filteredDistanceSearch = [];
+      //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
+      let j = 0;
+      //Let j be a counter for filteredDistanceSearch
+      for (let i = 0; i < restaurantResults.length; i++) {
+
+        Axios({
+          method: `GET`,
+          url: `http://proxy.hackeryou.com`,
+          dataResponse: `json`,
+          params: {
+            reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${apiKey}&mode=driving`,
+            proxyHeaders: {
+              'header_params': 'value'
+            },
+            xmlToJSON: false
+          }
+
+        }).then((res) => {
+          console.log(res.data.rows[0].elements[0].duration.text);
+          restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
+          // time in seconds
+
+          if (restaurantResults[i].distance < 1800) {
+            filteredDistanceSearch[j] = restaurantResults[i];
+            j += 1;
+          }
+
+        })
+
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       this.setState({
         searchedRestaurants: restaurantResults,
+        filteredRestaurant: filteredDistanceSearch,
         searchStart: searchStart + 20,
         hideLiVisibleResto: true,
         hideLiVisibleTvShows: false,
@@ -118,9 +162,7 @@ class App extends Component {
       })
 
       setTimeout(this.smoothScroll(), 2000);
-
-    })
-  }
+  })}
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // function to make axios call to TV Maze to get TV Shows information
@@ -260,6 +302,14 @@ getTvShows = () => {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function to Grab User Address
+
+  userAddress = (event) => {
+    this.setState({
+      userAddress: event.target.value
+    })
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
   render() {
     
@@ -269,6 +319,7 @@ getTvShows = () => {
         <nav>
           <Link to="/"><i class="fas fa-home"></i> Home</Link>
           <Link to="/favorite"><i class="fas fa-star"></i> Favorites</Link>
+          <input type="text" placeholder="type your addy here" onChange = {this.userAddress} />
         </nav>
 
         <Route exact path="/" render={() => {
@@ -288,6 +339,7 @@ getTvShows = () => {
                 hideLiVisibleTvShows={this.state.hideLiVisibleTvShows}
                 hideLiVisibleResto={this.state.hideLiVisibleResto}
                 inputRef={this.inputRef}
+                filteredRestaurant = {this.state.filteredRestaurant}
               />
               {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
               {(this.state.resultVisibity) && <Results
