@@ -6,6 +6,7 @@ import Results from './components/Results';
 import MainHeader from './components/MainHeader';
 import Favorites from './components/Favorites';
 import Mix from './components/Mix';
+import Key from './components/Key'
 import {
   BrowserRouter as Router,
   Route,
@@ -115,7 +116,6 @@ class App extends Component {
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //Google Maps API starts Here 
 
-      const apiKey = `AIzaSyATIp2yKkc69JQ6qlD4B6hY90xBwuJA2UQ`;
       const origin = `${this.state.userAddress}`
       let filteredDistanceSearch = [];
       //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
@@ -128,7 +128,7 @@ class App extends Component {
           url: `http://proxy.hackeryou.com`,
           dataResponse: `json`,
           params: {
-            reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${apiKey}&mode=driving`,
+            reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${Key}&mode=driving`,
             proxyHeaders: {
               'header_params': 'value'
             },
