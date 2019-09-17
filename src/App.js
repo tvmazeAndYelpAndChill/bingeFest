@@ -36,6 +36,9 @@ class App extends Component {
       hideLiVisibleResto: false,
       hideLiVisibleTvShows: false,
     }
+
+    this.inputRef = React.createRef();
+    this.resultsRef = React.createRef();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,12 +50,16 @@ class App extends Component {
 
       let allFaveRestaurants = []
       let allFaveShows = []
-      for (let item in data.food) {
-        allFaveRestaurants.push(data.food[item]);
+
+      if (data != null) {
+        for (let item in data.food) {
+          allFaveRestaurants.push(data.food[item]);
+        }
+        for (let item in data.tv) {
+          allFaveShows.push(data.tv[item]);
+        }
       }
-      for (let item in data.tv) {
-        allFaveShows.push(data.tv[item]);
-      }
+      
       this.setState({
         faveRestaurants: allFaveRestaurants,
         faveShows: allFaveShows
@@ -109,6 +116,9 @@ class App extends Component {
         restaurantQuery: true,
         showQuery: false,
       })
+
+      setTimeout(this.smoothScroll(), 2000);
+
     })
   }
 
@@ -123,7 +133,7 @@ getTvShows = () => {
     const tvShowsResults = res.data.map((item) => {
 
       // error handling for when tv show does not have a poster
-      let poster = 'https://www.dogster.com/wp-content/uploads/2015/05/dachshund-puppies-10.jpg';
+      let poster = ''
       let returnedPoster = item.show.image;
       if (returnedPoster !=null) {
         poster = item.show.image.original
@@ -159,6 +169,8 @@ getTvShows = () => {
       restaurantQuery: false,
       showQuery: true,
     })
+
+    setTimeout(this.smoothScroll(), 2000);
   })
 }
 
@@ -173,6 +185,8 @@ getTvShows = () => {
   handleSubmit = (event) => {
     event.preventDefault();
 
+    this.inputRef.current.value = '';
+
     this.setState({
       hideLiVisibleTvShows: false,
       hideLiVisibleResto: false,
@@ -183,6 +197,8 @@ getTvShows = () => {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
   handlePressTv = (event) => {
     let index = event.target.value;
+
+    this.inputRef.current.value = '';
 
     this.setState ({
       searchedShows: [this.state.searchedShows[index]],
@@ -213,6 +229,9 @@ getTvShows = () => {
 
   handlePressResto = (event) => {
     let index = event.target.value;
+
+    this.inputRef.current.value = '';
+
     this.setState({
       searchedRestaurants: [this.state.searchedRestaurants[index]],
       resultVisibity: true,
@@ -232,10 +251,15 @@ getTvShows = () => {
     const dbRef = firebase.database().ref(`${type}/${faveItem.name}`);
     dbRef.remove();
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that resets the visible state to false
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function to smooth scroll
 
+  smoothScroll = () => {
+    let element = this.resultsRef.current;
+    if (element != null) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
-  //NEED TO PUT IN HERE
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////React Render & Return 
   render() {
     
@@ -263,6 +287,7 @@ getTvShows = () => {
                 searchedRestaurants={this.state.searchedRestaurants}
                 hideLiVisibleTvShows={this.state.hideLiVisibleTvShows}
                 hideLiVisibleResto={this.state.hideLiVisibleResto}
+                inputRef={this.inputRef}
               />
               {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
               {(this.state.resultVisibity) && <Results
@@ -274,6 +299,7 @@ getTvShows = () => {
                 userInput={this.state.userInput}
                 showQuery={this.state.showQuery}
                 restaurantQuery={this.state.restaurantQuery}
+                resultsRef={this.resultsRef}
               />}
 
             </div>
