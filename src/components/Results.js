@@ -9,7 +9,7 @@ class Results extends Component {
             <main
             ref={this.props.resultsRef}
             className="resultSection">
-                <h2>Your search results for {this.props.userInput}</h2>
+                <h2>Your search results for "{this.props.userInput}"</h2>
 
                 {this.props.resultVisibity && this.props.restaurantQuery && <RestoResults 
                     searchedRestaurants = {this.props.searchedRestaurants}
