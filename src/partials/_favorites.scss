@@ -99,3 +99,32 @@
 .comboLink:visited {
     color: black;
 }
+
+// Responsive Design Section
+
+@media (max-width: 768px) {
+    .favouritedHeader {
+        font-size: 4.5rem;
+    }
+
+    .comboButton {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 414px) {
+    .favouritedHeader {
+        font-size: 3rem;
+        margin: 12% 0;
+    }
+
+    .comboButton {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .comboButton {
+        font-size: 2rem;
+    }
+}
