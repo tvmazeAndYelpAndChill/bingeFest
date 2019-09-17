@@ -6,7 +6,7 @@ import Results from './components/Results';
 import MainHeader from './components/MainHeader';
 import Favorites from './components/Favorites';
 import Mix from './components/Mix';
-// import Key from './components/Key'
+import Key from './components/Key'
 import {
   BrowserRouter as Router,
   Route,
@@ -116,37 +116,37 @@ class App extends Component {
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //Google Maps API starts Here 
 
-      // const origin = `${this.state.userAddress}`
-      // let filteredDistanceSearch = [];
-      // //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
-      // let j = 0;
-      // //Let j be a counter for filteredDistanceSearch
-      // for (let i = 0; i < restaurantResults.length; i++) {
+      const origin = `${this.state.userAddress}`
+      let filteredDistanceSearch = [];
+      //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
+      let j = 0;
+      //Let j be a counter for filteredDistanceSearch
+      for (let i = 0; i < restaurantResults.length; i++) {
 
-      //   Axios({
-      //     method: `GET`,
-      //     url: `http://proxy.hackeryou.com`,
-      //     dataResponse: `json`,
-      //     params: {
-      //       reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${Key}&mode=driving`,
-      //       proxyHeaders: {
-      //         'header_params': 'value'
-      //       },
-      //       xmlToJSON: false
-      //     }
+        Axios({
+          method: `GET`,
+          url: `http://proxy.hackeryou.com`,
+          dataResponse: `json`,
+          params: {
+            reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${Key}&mode=driving`,
+            proxyHeaders: {
+              'header_params': 'value'
+            },
+            xmlToJSON: false
+          }
 
-      //   }).then((res) => {
-      //     restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
-      //     // time in seconds
+        }).then((res) => {
+          restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
+          // time in seconds
 
-      //     if (restaurantResults[i].distance < 1800) {
-      //       filteredDistanceSearch[j] = restaurantResults[i];
-      //       j += 1;
-      //     }
+          // if (restaurantResults[i].distance < 1800) {
+          //   filteredDistanceSearch[j] = restaurantResults[i];
+          //   j += 1;
+          // }
 
-      //   })
+        })
 
-      // }
+      }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

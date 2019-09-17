@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RestaurantCard = ({ name, thumb, phone, rating, address }) => {
+const RestaurantCard = ({ name, thumb, phone, rating, address, distance }) => {
     return (
         <div className='cardContainer cardContainerRestaurant'>
             <div className='cardFront'>
@@ -12,6 +12,7 @@ const RestaurantCard = ({ name, thumb, phone, rating, address }) => {
                 <p><i class="fas fa-home"></i> {address}</p>
                 <p><i class="fas fa-phone-alt"></i> {phone}</p>
                 <p><i class="fas fa-star"></i> {rating}</p>
+                <p>Distance: {distance}</p>
             </div>
         </div>
     );

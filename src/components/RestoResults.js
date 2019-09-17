@@ -18,6 +18,7 @@ class RestoResults extends Component {
                                     thumb={rest.thumb}
                                     phone={rest.phone}
                                     rating={rest.rating} 
+                                    distance={rest.distance}
                                 />
                                 <button 
                                     className="favButton" 
