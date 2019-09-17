@@ -6,7 +6,7 @@ import Results from './components/Results';
 import MainHeader from './components/MainHeader';
 import Favorites from './components/Favorites';
 import Mix from './components/Mix';
-import Key from './components/Key'
+// import Key from './components/Key'
 import {
   BrowserRouter as Router,
   Route,
@@ -116,43 +116,43 @@ class App extends Component {
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //Google Maps API starts Here 
 
-      const origin = `${this.state.userAddress}`
-      let filteredDistanceSearch = [];
-      //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
-      let j = 0;
-      //Let j be a counter for filteredDistanceSearch
-      for (let i = 0; i < restaurantResults.length; i++) {
+      // const origin = `${this.state.userAddress}`
+      // let filteredDistanceSearch = [];
+      // //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
+      // let j = 0;
+      // //Let j be a counter for filteredDistanceSearch
+      // for (let i = 0; i < restaurantResults.length; i++) {
 
-        Axios({
-          method: `GET`,
-          url: `http://proxy.hackeryou.com`,
-          dataResponse: `json`,
-          params: {
-            reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${Key}&mode=driving`,
-            proxyHeaders: {
-              'header_params': 'value'
-            },
-            xmlToJSON: false
-          }
+      //   Axios({
+      //     method: `GET`,
+      //     url: `http://proxy.hackeryou.com`,
+      //     dataResponse: `json`,
+      //     params: {
+      //       reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${Key}&mode=driving`,
+      //       proxyHeaders: {
+      //         'header_params': 'value'
+      //       },
+      //       xmlToJSON: false
+      //     }
 
-        }).then((res) => {
-          restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
-          // time in seconds
+      //   }).then((res) => {
+      //     restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
+      //     // time in seconds
 
-          if (restaurantResults[i].distance < 1800) {
-            filteredDistanceSearch[j] = restaurantResults[i];
-            j += 1;
-          }
+      //     if (restaurantResults[i].distance < 1800) {
+      //       filteredDistanceSearch[j] = restaurantResults[i];
+      //       j += 1;
+      //     }
 
-        })
+      //   })
 
-      }
+      // }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       this.setState({
         searchedRestaurants: restaurantResults,
-        filteredRestaurant: filteredDistanceSearch,
+        // filteredRestaurant: filteredDistanceSearch,
         searchStart: searchStart + 20,
         hideLiVisibleResto: true,
         hideLiVisibleTvShows: false,
@@ -160,7 +160,7 @@ class App extends Component {
         showQuery: false,
       })
 
-      setTimeout(this.smoothScroll(), 2000);
+      // setTimeout(this.smoothScroll(), 2000);
   })}
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,43 +211,48 @@ getTvShows = () => {
       showQuery: true,
     })
 
-    setTimeout(this.smoothScroll(), 2000);
+    // setTimeout(this.smoothScroll(), 2000);
   })
 }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save userInput onKeyPress
   handleChange = (event) => {
     this.setState({
-      userInput: event.target.value
+      userInput: event.target.value,
+      resultVisibity: true,
     })
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when user submits input on enter key or button
 
   handleSubmit = (event) => {
     event.preventDefault();
-
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  
     this.inputRef.current.value = '';
 
     this.setState({
       hideLiVisibleTvShows: false,
       hideLiVisibleResto: false,
-      resultVisibity: true,
+
     })
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
-  handlePressTv = (event) => {
-    let index = event.target.value;
+  
+  // handlePress = (event) => {
+  //   let index = event.target.value;
 
-    this.inputRef.current.value = '';
+  //   this.inputRef.current.value = '';
 
-    this.setState ({
-      searchedShows: [this.state.searchedShows[index]],
-      hideLiVisibleTvShows: false,
-      resultVisibity: true,
-    })
+  //   this.setState ({
+  //     searchedShows: [this.state.searchedShows[index]],
+  //     hideLiVisibleTvShows: false,
+  //     resultVisibity: true,
+  //   })
 
-  }
+  // }
     
     //   Axios({
     //     method: 'Get',
@@ -268,17 +273,17 @@ getTvShows = () => {
     // })
   
 
-  handlePressResto = (event) => {
-    let index = event.target.value;
+  // handlePressResto = (event) => {
+  //   let index = event.target.value;
 
-    this.inputRef.current.value = '';
+  //   this.inputRef.current.value = '';
 
-    this.setState({
-      searchedRestaurants: [this.state.searchedRestaurants[index]],
-      resultVisibity: true,
-      hideLiVisibleResto: false,
-    })
-  }
+  //   this.setState({
+  //     searchedRestaurants: [this.state.searchedRestaurants[index]],
+  //     resultVisibity: true,
+  //     hideLiVisibleResto: false,
+  //   })
+  // }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
   faveClick = (event, type, faveItem) => {
@@ -325,6 +330,7 @@ getTvShows = () => {
           return (
             <div>
               <MainHeader
+                inputRef={this.inputRef}
                 handleChange={this.handleChange}
                 getTvShows={this.getTvShows}
                 // handleKeyEnterTV={this.handleKeyEnterTV}
@@ -337,8 +343,8 @@ getTvShows = () => {
                 searchedRestaurants={this.state.searchedRestaurants}
                 hideLiVisibleTvShows={this.state.hideLiVisibleTvShows}
                 hideLiVisibleResto={this.state.hideLiVisibleResto}
-                inputRef={this.inputRef}
                 filteredRestaurant = {this.state.filteredRestaurant}
+                resultVisibity={this.state.resultVisibity}
               />
               {/* Click on a specific Li from dropdown of RESTOS and map it to the page */}
               {(this.state.resultVisibity) && <Results
