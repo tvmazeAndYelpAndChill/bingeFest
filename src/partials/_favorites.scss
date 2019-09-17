@@ -57,8 +57,7 @@
     transform: translateY(4px);
 }
 
-.comboHeaderSection {
-    background-color: $secondaryColor;
+.comboSection {
     text-align: center;
     width: 60%;
     margin: 0 auto;
@@ -75,24 +74,24 @@
 .comboButton {
     display: inline-block;
     padding: 15px 25px;
-    font-size: 24px;
+    font-size: 5rem;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     outline: none;
     color: black;
-    background-color: #fff;
+    background-color: $secondaryColor;
     border: none;
     border-radius: 15px;
     box-shadow: 0 9px #999;
 }
 
 .comboButton:hover {
-    background-color: $tertiaryColor;
+    background-color: #fff;
 }
 
 .comboButton:active {
-    background-color: $tertiaryColor;
+    background-color: #fff;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
