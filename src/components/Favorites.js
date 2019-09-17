@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ShowCard from './ShowCard';
 import RestaurantCard from './RestaurantCard';
 import Combo from './Combo';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Footer from './Footer';
 class Favourites extends Component {
     
     render() {
@@ -16,7 +16,7 @@ class Favourites extends Component {
                         {this.props.faveShows.map((show) => {
                             return (
                                 <div>
-                                    <div className='individualCard'>
+                                    {this.props.faveShows.length > 0 ? <div className='individualCard'>
                                         <ShowCard 
                                             poster={show.poster} 
                                             name={show.name} 
@@ -30,7 +30,7 @@ class Favourites extends Component {
                                             onClick={((e) => this.props.removeItem(e, 'tv', show))}>
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                    </div>
+                                    </div> : "Please select a show from the homepage" }
                                 </div>
                             )
                         })}
@@ -42,24 +42,27 @@ class Favourites extends Component {
                     <div className="restaurantContainer">
                         {this.props.faveRestaurants.map((rest) => {
                             return (
-                                <div className='individualCard'>
-                                    <RestaurantCard 
-                                        name={rest.name} 
-                                        address={rest.address} 
-                                        thumb={rest.thumb} 
-                                        phone={rest.phone} 
-                                        rating={rest.rating}/>
-                                    <button 
-                                        className='removeFavButton' 
-                                        onClick={((e) => this.props.removeItem(e, 'food', rest))}>
-                                        <i class="far fa-trash-alt"></i>
-                                    </button>
+                                <div>
+                                    {this.props.faveRestaurants.length > 0 ? <div className='individualCard'>
+                                        <RestaurantCard 
+                                            name={rest.name} 
+                                            address={rest.address} 
+                                            thumb={rest.thumb} 
+                                            phone={rest.phone} 
+                                            rating={rest.rating}/>
+                                        <button 
+                                            className='removeFavButton' 
+                                            onClick={((e) => this.props.removeItem(e, 'food', rest))}>
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </div> : "Please select a restaurant from the homepage" }
                                 </div>
                             )
                         })}
                     </div>
                     {this.props.faveRestaurants.length > 0 && this.props.faveShows.length > 0 && <Combo />}
                 </div>
+                <Footer />
             </div>
         );
     };

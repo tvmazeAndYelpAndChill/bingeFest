@@ -4,6 +4,7 @@ import RestaurantCard from './RestaurantCard';
 import firebase from '../firebase';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import Footer from './Footer';
 
 class Mix extends Component {
     constructor() {
@@ -62,29 +63,32 @@ class Mix extends Component {
 
     render() {
         return (
-            <div class="mixSection">
-                <div className="wrapper">
-                    <h2>This is your combo for tonight!</h2>
-                    <div className="comboBox">
-                        <ShowCard
-                            className="comboResult"
-                            poster={this.state.randomShow.poster} 
-                            name={this.state.randomShow.name}
-                            rating={this.state.randomShow.rating}
-                            runtime={this.state.randomShow.runtime}
-                            genres={this.state.randomShow.genres}
-                            summary={this.state.randomShow.summary}
-                            /> 
-                        <RestaurantCard
-                            className="comboResult"
-                            name={this.state.randomRestaurant.name} 
-                            thumb={this.state.randomRestaurant.thumb}
-                            address={this.state.randomRestaurant.address}
-                            phone={this.state.randomRestaurant.phone}
-                            rating={this.state.randomRestaurant.rating}
-                            /> 
+            <div>
+                <div class="mixSection">
+                    <div className="wrapper">
+                        <h2>This is your combo for tonight!</h2>
+                        <div className="comboBox">
+                            <ShowCard
+                                className="comboResult"
+                                poster={this.state.randomShow.poster} 
+                                name={this.state.randomShow.name}
+                                rating={this.state.randomShow.rating}
+                                runtime={this.state.randomShow.runtime}
+                                genres={this.state.randomShow.genres}
+                                summary={this.state.randomShow.summary}
+                                /> 
+                            <RestaurantCard
+                                className="comboResult"
+                                name={this.state.randomRestaurant.name} 
+                                thumb={this.state.randomRestaurant.thumb}
+                                address={this.state.randomRestaurant.address}
+                                phone={this.state.randomRestaurant.phone}
+                                rating={this.state.randomRestaurant.rating}
+                                /> 
+                        </div>
                     </div>
                 </div>
+                <Footer />
             </div>
         );
     }

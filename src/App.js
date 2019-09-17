@@ -187,6 +187,14 @@ getTvShows = () => {
       } else {
         summary = summary.replace(/<.*?>/g, '')
       }
+
+      // error handling for provided genres
+      let genres = item.show.genres
+      if (genres == null) {
+        genres = 'No genre available'
+      } else {
+        genres = item.show.genres
+      }
       
       // returning an object that holds information about each tv show
       return {
