@@ -321,9 +321,11 @@ getTvShows = () => {
       <Router>
         
         <nav>
-          <Link to="/"><i class="fas fa-home"></i> Home</Link>
-          <Link to="/favorite"><i class="fas fa-star"></i> Favorites</Link>
-          <input type="text" placeholder="type your addy here" onChange = {this.userAddress} />
+          <input type="text" placeholder="type your addy here" onChange={this.userAddress} />
+          <div>
+            <Link to="/"><i class="fas fa-home"></i> Home</Link>
+            <Link to="/favorite"><i class="fas fa-star"></i> Favorites</Link>
+          </div>
         </nav>
 
         <Route exact path="/" render={() => {
