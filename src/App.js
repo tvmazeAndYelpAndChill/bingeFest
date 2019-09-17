@@ -6,7 +6,6 @@ import Results from './components/Results';
 import MainHeader from './components/MainHeader';
 import Favorites from './components/Favorites';
 import Mix from './components/Mix';
-import Key from './components/Key'
 import {
   BrowserRouter as Router,
   Route,
@@ -36,9 +35,6 @@ class App extends Component {
       // If hideLiVisibleResto or hideLiVisibleTvShow is true, the dropdown menu appears under search bar
       hideLiVisibleResto: false,
       hideLiVisibleTvShows: false,
-      //Google Map API States
-      filteredRestaurant: [],
-      userAddress: ''
     }
 
     this.inputRef = React.createRef();
@@ -114,45 +110,9 @@ class App extends Component {
       });
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //Google Maps API starts Here 
-
-      const origin = `${this.state.userAddress}`
-      let filteredDistanceSearch = [];
-      //Let filteredDistanceSearch be all the restaurants filtered by userInput of radius
-      let j = 0;
-      //Let j be a counter for filteredDistanceSearch
-      for (let i = 0; i < restaurantResults.length; i++) {
-
-        Axios({
-          method: `GET`,
-          url: `http://proxy.hackeryou.com`,
-          dataResponse: `json`,
-          params: {
-            reqUrl: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${restaurantResults[i].address}&key=${Key}&mode=driving`,
-            proxyHeaders: {
-              'header_params': 'value'
-            },
-            xmlToJSON: false
-          }
-
-        }).then((res) => {
-          restaurantResults[i].distance = res.data.rows[0].elements[0].duration.value;
-          // time in seconds
-
-          // if (restaurantResults[i].distance < 1800) {
-          //   filteredDistanceSearch[j] = restaurantResults[i];
-          //   j += 1;
-          // }
-
-        })
-
-      }
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       this.setState({
         searchedRestaurants: restaurantResults,
-        // filteredRestaurant: filteredDistanceSearch,
         searchStart: searchStart + 20,
         hideLiVisibleResto: true,
         hideLiVisibleTvShows: false,
@@ -246,53 +206,6 @@ getTvShows = () => {
 
     })
   }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////function to save to state when specific item is pressed from dropbox list
-  
-  // handlePress = (event) => {
-  //   let index = event.target.value;
-
-  //   this.inputRef.current.value = '';
-
-  //   this.setState ({
-  //     searchedShows: [this.state.searchedShows[index]],
-  //     hideLiVisibleTvShows: false,
-  //     resultVisibity: true,
-  //   })
-
-  // }
-    
-    //   Axios({
-    //     method: 'Get',
-    //     url: `http://api.tvmaze.com/shows/${this.state.searchedShows[index].id}/cast`,
-    //     dataResponse: 'json'
-    //   }).then((response) => {
-    //     for (let i=0;i<5;i++) {
-    //       tvShow.cast = response.data
-    //     }
-    //   })
-    //   this.setState({
-    //     tvShowsGallery: tvShow,
-    //   })
-    // })
-    // this.setState({
-    //   hideLiVisibleTvShows: false,
-    //   resultVisibity: true,
-    // })
-  
-
-  // handlePressResto = (event) => {
-  //   let index = event.target.value;
-
-  //   this.inputRef.current.value = '';
-
-  //   this.setState({
-  //     searchedRestaurants: [this.state.searchedRestaurants[index]],
-  //     resultVisibity: true,
-  //     hideLiVisibleResto: false,
-  //   })
-  // }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Function that adds item upon click from firebase to favourite List
   faveClick = (event, type, faveItem) => {
     event.preventDefault();
@@ -329,7 +242,6 @@ getTvShows = () => {
       <Router>
         
         <nav>
-          <input type="text" placeholder="type your addy here" onChange={this.userAddress} />
           <div>
             <Link to="/"><i class="fas fa-home"></i> Home</Link>
             <Link to="/favorite"><i class="fas fa-star"></i> Favorites</Link>

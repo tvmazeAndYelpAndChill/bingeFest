@@ -12,7 +12,6 @@ const RestaurantCard = ({ name, thumb, phone, rating, address, distance }) => {
                 <p><i class="fas fa-home"></i> {address}</p>
                 <p><i class="fas fa-phone-alt"></i> {phone}</p>
                 <p><i class="fas fa-star"></i> {rating}</p>
-                <p>Distance: {distance}</p>
             </div>
         </div>
     );
