@@ -72,6 +72,8 @@ class Mix extends Component {
                             name={this.state.randomShow.name}
                             rating={this.state.randomShow.rating}
                             runtime={this.state.randomShow.runtime}
+                            genres={this.state.randomShow.genres}
+                            summary={this.state.randomShow.summary}
                             /> 
                         <RestaurantCard
                             className="comboResult"

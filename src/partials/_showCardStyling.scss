@@ -50,15 +50,15 @@ img {
 }
 
 .cardFront {
-    // border: 1px solid blue;
     background: $secondaryColor;
     color: white;
 }
 
 .cardBack {
     transform: rotateY(180deg);
-    padding: 10px;
+    padding: 10px 30px;
     background: white;
+    overflow-y: scroll;
 
     p {
         text-align: left;

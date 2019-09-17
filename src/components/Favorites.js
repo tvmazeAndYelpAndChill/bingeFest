@@ -21,7 +21,10 @@ class Favourites extends Component {
                                             poster={show.poster} 
                                             name={show.name} 
                                             rating={show.rating} 
-                                            runtime={show.runtime}/>
+                                            runtime={show.runtime}
+                                            genres={show.genres.map((genre) => { return `${genre}, ` })}
+                                            summary={show.summary}
+                                        />
                                         <button 
                                             className='removeFavButton' 
                                             onClick={((e) => this.props.removeItem(e, 'tv', show))}>
