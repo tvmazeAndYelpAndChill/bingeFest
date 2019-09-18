@@ -2,17 +2,21 @@
 
 
 .resultSection {
-    background: $tertiaryColor;
-    padding: 5% 0 0 0;
+    background: rgb(243,238,223);
+    padding-top: 190px;
+
+    @media (max-width: 900px) {
+        padding-top: 210px;
+    }
 
     h2 {
         text-align: center;
-        color: #fff;
+        color: black;
+        letter-spacing: 1px;
         text-shadow: 2px;
         text-align: center;
-        font-size: 4rem;
+        font-size: 3rem;
         margin: 5% 0;
-        background: $primaryColor;
         text-transform: capitalize;
     }
 }

@@ -1,7 +1,5 @@
 .mainHeader {
-    background-position: right top;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: rgb(41, 41, 41);
     height: 100vh;
 }
 
@@ -9,6 +7,11 @@
     width: 100%;
     height: 100%;
     display: flex;
+
+    @media (max-width: 900px) {
+        flex-direction: column-reverse;
+
+    }
 }
 
 .headerTitle {
@@ -28,12 +31,21 @@
         margin-bottom: 20px;
         padding: 5px 15px;
         border: 2px solid white;
+        background: rgba(0, 0, 0, 0.3);
     }
 
     h2 {
-        font-size: 1.8rem;
+        font-size: calc(1.4rem + (18 - 14) * (100vw - 320px) / (1280 - 320));
         font-family: $secondaryFont;
         width: 50%;
+
+        @media (max-width: 900px) {
+            width: 70%;
+        }
+
+        @media (max-width: 400px) {
+            font-size: 1.4rem;
+        }
     }
     
 
@@ -44,6 +56,12 @@
     height: 100%;
     transition: all 1.5s;
 
+    @media (max-width: 900px) {
+        width: 100%;
+        height: 25%;
+        transition: none;
+    }
+
     form {
         width: 100%;
         height: 100%;
@@ -51,7 +69,7 @@
         // flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.3));
     }
 }
 
@@ -59,6 +77,10 @@
     background: url(../assets/sushi.jpg);
     background-size: cover;
     background-position: center;
+
+    @media (max-width: 900px) {
+        
+    }
 
     .inputBar {
         border: 1px solid $secondaryColor;
@@ -90,6 +112,10 @@
     overflow: hidden;
     border-radius: 30px;
 
+    @media (max-width: 500px) {
+        width: 80%;
+    }
+
     button {
         width: 60px;
         height: 40px;
@@ -115,55 +141,69 @@
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.4));
     }
 }
-
-    .restoForm:hover, .tvForm:hover {
-        width: 100%;
-
-        form {
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        .inputBar {
-            width: 55%;
-            border-width: 3px;
-        }        
+    @media (min-width: 900px) {
+        .restoForm:hover, .tvForm:hover {
+            width: 100%;
+    
+            form {
+                background: rgba(0, 0, 0, 0.4);
+            }
+    
+            .inputBar {
+                width: 55%;
+                border-width: 3px;
+            }        
+        }           
     }
-
-ul {
-    // border: 2px solid tomato;
-    // overflow-y: scroll;
-    transition: all 1s;
-    width: 55%;
-    position: relative;
-    background: white;
-    color: black;
-    padding: 15px 15px;
-    margin: 0;
-    list-style: none;
-    border-radius: 20px;
-
-    li {
-        transition: all 1s;
-    }
-}
 
 .headerGone {
-    height: 30vh;
-    transition-property: height;
-    transition-duration: 2s;
-    transition-delay: 0.3s;
+    height: 190px;
+    transition: all 2s 0.3s;
+    position: fixed;
+    margin-top: 50px;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    box-shadow: (2px 2px 5px rgba(0, 0, 0, 0.3));
 
-    .headerTitle {
-        display: none;
+    @media (min-width: 900px) {
+        height: 160px;
     }
 
-    .restoForm:hover, .tvForm:hover {
-        width: 50%;        
+    @media (max-width: 900px) {
+        transition: none;
+    }
+
+    @media (max-width: 700px) {
+        margin-top: 0;
+    }
+
+    .headerTitle {
+        top: 20px;
+
+        h1 {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            transition: all 2s 0.3s;
+            margin: 0;
+            
+        }
+
+        h2 {
+            display: none;
+        }
+        
     }
 
     .restoForm, .tvForm {
-        padding-top: 25px;
 
+        @media (min-width: 900px) {
+            width: 50%;
+        }
+
+        @media (max-width: 900px) {
+            height: 30%;
+        }
         form {
             background: rgba(0, 0, 0, 0.6);
         }

@@ -10,7 +10,7 @@ class Favourites extends Component {
             <div className="favouritesSection">
                 <div class="wrapper">
                     <div className='favouritedHeaderSection'>
-                        <h2 className="favouritedHeader">Your Favourited TV Shows</h2>
+                        <h2 className="favouritedHeader">Your Favorited TV Shows</h2>
                     </div>
                     <div className='showContainer'>
                         {this.props.faveShows.map((show) => {
@@ -25,8 +25,11 @@ class Favourites extends Component {
                                             genres={show.genres.map((genre) => { return `${genre}, ` })}
                                             summary={show.summary}
                                         />
+                                        <label className="visuallyHidden" htmlFor="removeFavButton">Click button to remove item from your favourites.</label>
                                         <button 
-                                            className='removeFavButton' 
+                                            class="removeFavButton"
+                                            aria-label="Remove favourite button"
+                                            className='removeFavButton'
                                             onClick={((e) => this.props.removeItem(e, 'tv', show))}>
                                             <i class="far fa-trash-alt"></i>
                                         </button>
@@ -37,7 +40,7 @@ class Favourites extends Component {
                     </div>
     
                     <div className='favouritedHeaderSection'>
-                        <h2 className="favouritedHeader">Your Favourited Restaurants</h2>
+                        <h2 className="favouritedHeader">Your Favorited Restaurants</h2>
                     </div>
                     <div className="restaurantContainer">
                         {this.props.faveRestaurants.map((rest) => {
@@ -50,8 +53,11 @@ class Favourites extends Component {
                                             thumb={rest.thumb} 
                                             phone={rest.phone} 
                                             rating={rest.rating}/>
+                                        <label className="visuallyHidden" htmlFor="removeFavButton">Click button to remove item from your favourites.</label>
                                         <button 
-                                            className='removeFavButton' 
+                                            className='removeFavButton'
+                                            name="removeFavButton"
+                                            aria-label="Remove Favourite Button"
                                             onClick={((e) => this.props.removeItem(e, 'food', rest))}>
                                             <i class="far fa-trash-alt"></i>
                                         </button>

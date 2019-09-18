@@ -4,7 +4,6 @@ import RestaurantCard from './RestaurantCard';
 import firebase from '../firebase';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import Footer from './Footer';
 
 class Mix extends Component {
     constructor() {

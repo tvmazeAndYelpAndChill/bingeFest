@@ -27,6 +27,7 @@ img {
     .cardFront img {
         height: calc(100% - 50px);
         object-fit: cover;
+        border-bottom: 2px solid $tertiaryColor;
     }
 }
 
@@ -50,7 +51,7 @@ img {
 }
 
 .cardFront {
-    background: $secondaryColor;
+    background: $primaryColor;
     color: white;
 }
 
@@ -58,7 +59,13 @@ img {
     transform: rotateY(180deg);
     padding: 10px 30px;
     background: white;
-    overflow-y: scroll;
+    
+
+    .summaryOverflow {
+        margin-top: 30px;
+        height: 170px;
+        overflow-y: scroll;
+    }
 
     p {
         text-align: left;
@@ -67,6 +74,10 @@ img {
     i,
     h3 {
         color: $secondaryColor;
+    }
+
+    i {
+        padding-right: 5px;
     }
 
     h3 {
