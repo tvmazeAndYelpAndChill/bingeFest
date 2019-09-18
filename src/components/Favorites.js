@@ -25,8 +25,11 @@ class Favourites extends Component {
                                             genres={show.genres.map((genre) => { return `${genre}, ` })}
                                             summary={show.summary}
                                         />
+                                        <label className="visuallyHidden" htmlFor="removeFavButton">Click button to remove item from your favourites.</label>
                                         <button 
-                                            className='removeFavButton' 
+                                            class="removeFavButton"
+                                            aria-label="Remove favourite button"
+                                            className='removeFavButton'
                                             onClick={((e) => this.props.removeItem(e, 'tv', show))}>
                                             <i class="far fa-trash-alt"></i>
                                         </button>
@@ -50,8 +53,11 @@ class Favourites extends Component {
                                             thumb={rest.thumb} 
                                             phone={rest.phone} 
                                             rating={rest.rating}/>
+                                        <label className="visuallyHidden" htmlFor="removeFavButton">Click button to remove item from your favourites.</label>
                                         <button 
-                                            className='removeFavButton' 
+                                            className='removeFavButton'
+                                            name="removeFavButton"
+                                            aria-label="Remove Favourite Button"
                                             onClick={((e) => this.props.removeItem(e, 'food', rest))}>
                                             <i class="far fa-trash-alt"></i>
                                         </button>

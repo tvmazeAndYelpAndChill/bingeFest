@@ -15,11 +15,17 @@ class MainHeader extends Component {
                         <div className="tvForm">
                             <form>
                                 <div className="inputBar">
+                                    <label className="visuallyHidden" htmlFor="tvInput">Search for a TV show.</label>
                                     <input 
                                     ref={this.props.inputRef}
+                                    name="tvInput"
+                                    id="tvInput"
                                     className="tvInput" onChange={this.props.handleChange} onKeyUp={this.props.getTvShows} placeholder="Search for a TV Show" type="text"/>
+                                    <label className="visuallyHidden" htmlFor="searchButton">Click button to search for your query.</label>
                                     <button
-                                    onClick={this.props.handleSubmit} className="searchButton"><i class="fas fa-arrow-right"></i></button>
+                                    aria-label="Search button"
+                                    name="searchButton"
+                                    onClick={this.props.handleSubmit} className="searchButton"><i aria-hidden class="fas fa-arrow-right"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -27,10 +33,17 @@ class MainHeader extends Component {
 
                             <form>
                                 <div className="inputBar">
-                                    <input className="restoInput" onChange={this.props.handleChange} onKeyUp={this.props.getRestaurants} placeholder="Search for a restaurant" type="text"/>
-                                    <button 
+                                    <label className="visuallyHidden" htmlFor="restoInput">Search for a restaurant.</label>
+                                    <input 
+                                    class="restoInput"
+                                    id="tvInput"
+                                    className="restoInput" onChange={this.props.handleChange} onKeyUp={this.props.getRestaurants} placeholder="Search for a restaurant" type="text"/>
+                                    <label className="visuallyHidden" htmlFor="searchButton">Click button to search for your query.</label>
+                                    <button
+                                    aria-label="Search button"
+                                    class="searchButton" 
                                     onClick={this.props.handleSubmit}
-                                    className="searchButton"><i class="fas fa-arrow-right"></i></button>
+                                    className="searchButton"><i aria-hidden class="fas fa-arrow-right"></i></button>
                                 </div>
                                 
 

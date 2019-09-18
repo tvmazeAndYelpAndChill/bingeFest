@@ -19,8 +19,10 @@ class TvShowsResults extends Component {
                             genres={show.genres.map((genre) => { return `${genre}, ` })}
                             summary={show.summary}
                         />
+                        <label className="visuallyHidden" htmlFor="favButton">Add TV show to your favourites.</label>
                         <button 
-                            className="favButton" 
+                            className="favButton"
+                            aria-label="Favourite button"
                             onClick={(event) => this.props.favouriteButton(event, 'tv', show)}>
                             <i class="fas fa-star"></i>
                         </button>

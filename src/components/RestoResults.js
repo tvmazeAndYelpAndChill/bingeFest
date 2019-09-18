@@ -19,8 +19,11 @@ class RestoResults extends Component {
                                     phone={rest.phone}
                                     rating={rest.rating} 
                                 />
-                                <button 
-                                    className="favButton" 
+                                <label className="visuallyHidden" htmlFor="favButton">Add restaurant to your favourits list.</label>
+                                <button
+                                    class="favButton" 
+                                    className="favButton"
+                                    aria-label="Favourite button"
                                     onClick={(event) => this.props.favouriteButton(event, 'food', rest)}>
                                     <i class="fas fa-star"></i>
                                 </button>
