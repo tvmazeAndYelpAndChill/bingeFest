@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-// import Results from '../components/Results'
 import RestaurantCard from './RestaurantCard'
 
 class RestoResults extends Component {
 
     render () {
         return (
-
             <div className="restaurantContainer wrapper">
                 {
                     this.props.searchedRestaurants.map((rest, index) => {
@@ -32,7 +30,6 @@ class RestoResults extends Component {
                     })
                 }
             </div>
-
         )
     }
 }

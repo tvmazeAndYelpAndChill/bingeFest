@@ -9,8 +9,6 @@
 
 .favouritedHeaderSection {
     background-color: $primaryColor;
-
-
 }
 
 .favouritedHeader {
@@ -18,8 +16,7 @@
     text-shadow: 2px;
     text-align: center;
     font-size: 4rem;
-    margin: 5% 0;
-    
+    margin: 5% 0; 
 }
 
 .individualCard {
@@ -104,7 +101,6 @@
 }
 
 // Responsive Design Section
-
 @media (max-width: 768px) {
     .favouritedHeader {
         font-size: 4.5rem;

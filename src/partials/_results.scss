@@ -1,6 +1,4 @@
 // STYLING FOR RESULTS SECTION
-
-
 .resultSection {
     background: rgb(243,238,223);
     padding-top: 190px;
@@ -28,7 +26,6 @@
     grid-auto-rows: minmax(420px, 0.3fr);
     grid-gap: 20px;
     
-
     .eachRestoCard img {
         height: 50%;
         object-fit: cover;

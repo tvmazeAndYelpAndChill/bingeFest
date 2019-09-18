@@ -25,7 +25,6 @@ class Results extends Component {
                     favouriteButton = {this.props.faveClick}
                     />}
                 </div>
-
                 <Footer />
             </main>
 

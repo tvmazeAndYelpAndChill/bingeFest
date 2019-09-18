@@ -30,7 +30,6 @@ class MainHeader extends Component {
                             </form>
                         </div>
                         <div className="restoForm">
-
                             <form>
                                 <div className="inputBar">
                                     <label className="visuallyHidden" htmlFor="restoInput">Search for a restaurant.</label>
@@ -45,8 +44,6 @@ class MainHeader extends Component {
                                     onClick={this.props.handleSubmit}
                                     className="searchButton"><i aria-hidden class="fas fa-arrow-right"></i></button>
                                 </div>
-                                
-
                             </form>
                         </div>
                     </div>

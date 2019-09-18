@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RestaurantCard = ({ name, thumb, phone, rating, address, distance }) => {
+const RestaurantCard = ({ name, thumb, phone, rating, address }) => {
     return (
         <div className='cardContainer cardContainerRestaurant'>
             <div className='cardFront'>
