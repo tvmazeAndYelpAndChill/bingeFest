@@ -1,5 +1,5 @@
 nav {
-    background: rgb(249,246,239);
+    background: rgb(249,246,239) ;
     padding: 15px 50px;
     height: 50px;
     position: fixed;
@@ -18,6 +18,7 @@ nav {
         position: relative;
         z-index: 10;
         
+
         &:hover::after {
             content: '';
             display: block;
@@ -29,6 +30,32 @@ nav {
             left: 25px;
             z-index: -10;
         }
+    }   
+}
+
+.menuOpen {
+    display: flex;
+    justify-content: center;
+    padding: 15px 20px 15px 50px;
+
+    @media (max-width: 315px) {
+        a {
+            padding: 15px 10px;
+        }
     }
 }
 
+.hamburgerMenu {
+    display: none;
+    border: none;
+    padding: 12px 20px;
+    color: $secondaryColor;
+    background: transparent;
+    font-size: 2rem;
+    position: fixed;
+    z-index: 20;
+
+    @media (max-width: 700px) {
+        display: block;
+    }
+}
