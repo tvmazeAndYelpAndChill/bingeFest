@@ -35,6 +35,7 @@ class App extends Component {
       // If hideLiVisibleResto or hideLiVisibleTvShow is true, the dropdown menu appears under search bar
       hideLiVisibleResto: false,
       hideLiVisibleTvShows: false,
+      menuOpen: false
     }
 
     this.inputRef = React.createRef();
@@ -241,7 +242,12 @@ getTvShows = () => {
     return (
       <Router>
         
-        <nav>
+        <button 
+          className="hamburgerMenu" 
+          onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
+          <i className={this.state.menuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
+        </button>
+        <nav className={this.state.menuOpen ? 'menuOpen' : null}>
           <div>
             <Link to="/"><i class="fas fa-home"></i> Home</Link>
             <Link to="/favorite"><i class="fas fa-star"></i> Favorites</Link>
