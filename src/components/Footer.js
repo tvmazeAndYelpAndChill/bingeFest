@@ -4,7 +4,7 @@ class Footer extends Component {
     render() {
         return (
             <div className='footer'>
-                <p>&copy; 2019 Aushvin, Dani, Natalia and Nick</p>
+                <p>&copy; 2019 Aushvin, Danii, Natalia and Nick</p>
                 <p>API's provided by Zomato and TVMaze</p>
             </div>
         )

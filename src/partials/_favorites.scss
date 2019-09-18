@@ -3,20 +3,23 @@
 }
 
 .favouritesSection {
-    background-color: $tertiaryColor;
+    background-color: rgb(243,238,223);
     padding: 5% 0 0 0;
 }
 
 .favouritedHeaderSection {
     background-color: $primaryColor;
+
+
 }
 
 .favouritedHeader {
     color: #fff;
     text-shadow: 2px;
     text-align: center;
-    font-size: 6rem;
+    font-size: 4rem;
     margin: 5% 0;
+    
 }
 
 .individualCard {

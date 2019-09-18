@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ImagePlaceholder from '../assets/tv.jpg';
+import ImagePlaceholder from '../assets/tvPlaceholder.jpg';
 import ShowCard from './ShowCard';
 
 class TvShowsResults extends Component {

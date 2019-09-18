@@ -10,7 +10,7 @@ class Favourites extends Component {
             <div className="favouritesSection">
                 <div class="wrapper">
                     <div className='favouritedHeaderSection'>
-                        <h2 className="favouritedHeader">Your Favourited TV Shows</h2>
+                        <h2 className="favouritedHeader">Your Favorited TV Shows</h2>
                     </div>
                     <div className='showContainer'>
                         {this.props.faveShows.map((show) => {
@@ -37,7 +37,7 @@ class Favourites extends Component {
                     </div>
     
                     <div className='favouritedHeaderSection'>
-                        <h2 className="favouritedHeader">Your Favourited Restaurants</h2>
+                        <h2 className="favouritedHeader">Your Favorited Restaurants</h2>
                     </div>
                     <div className="restaurantContainer">
                         {this.props.faveRestaurants.map((rest) => {
