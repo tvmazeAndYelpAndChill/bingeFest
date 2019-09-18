@@ -63,6 +63,11 @@ class Mix extends Component {
     render() {
         return (
             <div>
+                <div className="mobileHeader">
+                    <div className="headerTitle">
+                        <h1 >bingeFest</h1>
+                    </div>
+                </div>
                 <div class="mixSection">
                     <div className="wrapper">
                         <h2>This is your combo for tonight!</h2>

@@ -8,11 +8,16 @@ class Favourites extends Component {
     render() {
         return (
             <div className="favouritesSection">
-                <div class="wrapper">
-                    <div className='favouritedHeaderSection'>
-                        <h2 className="favouritedHeader">Your Favorited TV Shows</h2>
+                <div className="mobileHeader">
+                    <div className="headerTitle">
+                        <h1 >bingeFest</h1>
                     </div>
-                    <div className='showContainer'>
+                </div>
+                <div className='favouritedHeaderSection tvHeader'>
+                    <h2 className="favouritedHeader">Your Favorited TV Shows</h2>
+                </div>
+
+                    <div className='showContainer wrapper'>
                         {this.props.faveShows.map((show) => {
                             return (
                                 <div>
@@ -38,11 +43,11 @@ class Favourites extends Component {
                             )
                         })}
                     </div>
-    
-                    <div className='favouritedHeaderSection'>
+                
+                    <div className='favouritedHeaderSection foodHeader'>
                         <h2 className="favouritedHeader">Your Favorited Restaurants</h2>
                     </div>
-                    <div className="restaurantContainer">
+                    <div className="restaurantContainer wrapper">
                         {this.props.faveRestaurants.map((rest) => {
                             return (
                                 <div>
@@ -67,7 +72,7 @@ class Favourites extends Component {
                         })}
                     </div>
                     {this.props.faveRestaurants.length > 0 && this.props.faveShows.length > 0 && <Combo />}
-                </div>
+                
                 <Footer />
             </div>
         );

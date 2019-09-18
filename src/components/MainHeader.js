@@ -10,7 +10,7 @@ class MainHeader extends Component {
                     <div className="wrapperHeader">
                         <div className="headerTitle">
                             <h1 >bingeFest</h1>
-                            <h2>Save your favorite TV Shows and restaurants and let us find you the best combo to binge tonight!</h2>
+                            <h2>Save your favorite TV Shows and Restaurants and find the perfect combo to stay in with tonight.</h2>
                         </div>
                         <div className="tvForm">
                             <form>
